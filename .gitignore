@@ -1,0 +1,11 @@
+.DS_Store
+profile
+*.swp
+*~.nib
+src/build/*
+*.xcclassmodel/*
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.mode1v3
+*.mode2v3
