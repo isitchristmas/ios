@@ -9,21 +9,18 @@
 #import "IsItChristmasViewController.h"
 
 @implementation IsItChristmasViewController
-@synthesize resultLabel, selectedLanguage, selectedCountry, portraitFrame, landscapeFrame, languageYesDict, languageNoDict;
+@synthesize resultLabel, selectedLanguage, selectedCountry, languageYesDict, languageNoDict;
 static int padding = 10;
 
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
+//load the view
 - (void)loadView {
+	
 	[super loadView];
 	
 	//load the language dictionaries
 	NSBundle *mainBundle = [NSBundle mainBundle];
 	self.languageYesDict = [mainBundle objectForInfoDictionaryKey:@"LANGUAGE_YES"];
 	self.languageNoDict = [mainBundle objectForInfoDictionaryKey:@"LANGUAGE_NO"];
-	
-	//use the whole screen minus the padding for the resultLabel frame
-	self.portraitFrame = CGRectMake(padding, padding, 320 - (padding * 2), 480 - (padding * 2));
-	self.landscapeFrame = CGRectMake(padding, padding, 480 - (padding * 2), 320 - (padding * 2));
 	
 	//get the languages array and get the selected language
 	//the preferred language code is always the first item in the array
@@ -51,6 +48,7 @@ static int padding = 10;
 	NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
 	unsigned unitFlags = NSMonthCalendarUnit |  NSDayCalendarUnit;
 	NSDateComponents *dateComponents = [gregorian components:unitFlags fromDate:[NSDate date]];
+	[gregorian release];
 	
 	//check to see if it is christmas
 	if ([dateComponents month] == 12 && [dateComponents day] == 25) {
@@ -67,17 +65,20 @@ static int padding = 10;
 	return (isChristmas) ? @"yes" : @"no";
 }
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+//additional setup after loading the view
 - (void)viewDidLoad {
 	
+	[super viewDidLoad];
+	
 	//initialize the resultLabel and use the whole screen
-	UILabel *tmpLabel = [[UILabel alloc] initWithFrame:portraitFrame];
+	UILabel *tmpLabel = [[UILabel alloc] initWithFrame:CGRectMake(padding, padding, self.view.frame.size.width - (padding * 2), self.view.frame.size.height - (padding * 2))];
 	self.resultLabel = tmpLabel;
 	[tmpLabel release];
 	
 	//set the font, etc
 	self.resultLabel.font = [UIFont fontWithName:@"ArialMT" size:180.0];
 	self.resultLabel.adjustsFontSizeToFitWidth = YES;
+	self.resultLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
 	self.resultLabel.textAlignment = UITextAlignmentCenter;
 	
 	//add the results label to the screen
@@ -87,8 +88,6 @@ static int padding = 10;
 	//then every 5 seconds check to see if it is christmas
 	[self setResultLabel];
 	[NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(setResultLabel) userInfo:nil repeats:YES];
-	
-    [super viewDidLoad];
 }
 
 //this just sets the label test by calling isItChristmas
@@ -97,18 +96,9 @@ static int padding = 10;
 	self.resultLabel.text = [[self isItChristmas] uppercaseString];
 }
 
-// Override to allow orientations other than the default portrait orientation.
+//allow all orientations
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
-}
-
-//resize/reposition the label if the phone is rotated
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {	
-	if (toInterfaceOrientation == UIInterfaceOrientationPortrait || toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
-		self.resultLabel.frame = portraitFrame;
-	} else {
-		self.resultLabel.frame = landscapeFrame;
-	}
 }
 
 //release memory

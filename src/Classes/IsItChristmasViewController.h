@@ -15,8 +15,6 @@
 	NSString *selectedLanguage;
 	NSString *selectedCountry;
 	UILabel *resultLabel;
-	CGRect portraitFrame;
-	CGRect landscapeFrame;
 }
 
 - (void)setResultLabel;
@@ -26,7 +24,5 @@
 @property (nonatomic, retain) NSString *selectedLanguage;
 @property (nonatomic, retain) NSString *selectedCountry;
 @property (nonatomic, retain) UILabel *resultLabel;
-@property (nonatomic) CGRect portraitFrame;
-@property (nonatomic) CGRect landscapeFrame;
 
 @end
