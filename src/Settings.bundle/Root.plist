@@ -172,6 +172,12 @@
 			<key>Title</key>
 			<string>Note: You must restart the app for changes to take effect.</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Notifications are only available in iOS 4.0 and above.</string>
+		</dict>
 	</array>
 </dict>
 </plist>
