@@ -31,7 +31,9 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
 	//setup the local notifications in the background
 	[[NSUserDefaults standardUserDefaults] synchronize];
-	[self performSelectorInBackground:@selector(setupNotifications) withObject:nil];
+	if ([[UIApplication sharedApplication] respondsToSelector:@selector(scheduleLocalNotification:)]) {
+		[self performSelectorInBackground:@selector(setupNotifications) withObject:nil];
+	}
 }
 
 - (void)setupNotifications {
@@ -79,7 +81,7 @@
 		NSDate *itemDate = [calendar dateFromComponents:components];
 		
 		//setup the notification
-		UILocalNotification *notification = [[UILocalNotification alloc] init];
+		UILocalNotification *notification = [[NSClassFromString(@"UILocalNotification") alloc] init];
 		notification.fireDate = itemDate;
 		notification.timeZone = [NSTimeZone defaultTimeZone];
 		notification.alertAction = @"View";
