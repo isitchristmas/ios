@@ -45,10 +45,10 @@ static int padding = 10;
 	BOOL isChristmas = NO;
 	
 	//get the current date
-	NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+	NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
 	unsigned unitFlags = NSMonthCalendarUnit |  NSDayCalendarUnit;
-	NSDateComponents *dateComponents = [gregorian components:unitFlags fromDate:[NSDate date]];
-	[gregorian release];
+	NSDateComponents *dateComponents = [calendar components:unitFlags fromDate:[NSDate date]];
+	[calendar release];
 	
 	//check to see if it is christmas
 	if ([dateComponents month] == 12 && [dateComponents day] == 25) {

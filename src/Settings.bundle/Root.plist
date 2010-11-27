@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>StringsTable</key>
+	<string>Root</string>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Daily December Notifications</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Dec Notifications</string>
+			<key>Key</key>
+			<string>notify_december</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Time</string>
+			<key>Titles</key>
+			<array>
+				<string>12:00 AM (midnight)</string>
+				<string>1:00 AM</string>
+				<string>2:00 AM</string>
+				<string>3:00 AM</string>
+				<string>4:00 AM</string>
+				<string>5:00 AM</string>
+				<string>6:00 AM</string>
+				<string>7:00 AM</string>
+				<string>8:00 AM</string>
+				<string>9:00 AM</string>
+				<string>10:00 AM</string>
+				<string>11:00 AM</string>
+				<string>12:00 PM (noon)</string>
+				<string>1:00 PM</string>
+				<string>2:00 PM</string>
+				<string>3:00 PM</string>
+				<string>4:00 PM</string>
+				<string>5:00 PM</string>
+				<string>6:00 PM</string>
+				<string>7:00 PM</string>
+				<string>8:00 PM</string>
+				<string>9:00 PM</string>
+				<string>10:00 PM</string>
+				<string>11:00 PM</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>3</integer>
+				<integer>4</integer>
+				<integer>5</integer>
+				<integer>6</integer>
+				<integer>7</integer>
+				<integer>8</integer>
+				<integer>9</integer>
+				<integer>10</integer>
+				<integer>11</integer>
+				<integer>12</integer>
+				<integer>13</integer>
+				<integer>14</integer>
+				<integer>15</integer>
+				<integer>16</integer>
+				<integer>17</integer>
+				<integer>18</integer>
+				<integer>19</integer>
+				<integer>20</integer>
+				<integer>21</integer>
+				<integer>22</integer>
+				<integer>23</integer>
+			</array>
+			<key>Key</key>
+			<string>notify_december_time</string>
+			<key>DefaultValue</key>
+			<integer>12</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Christmas Day Notification</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Christmas Notification</string>
+			<key>Key</key>
+			<string>notify_christmas</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Time</string>
+			<key>Titles</key>
+			<array>
+				<string>12:00 AM (midnight)</string>
+				<string>1:00 AM</string>
+				<string>2:00 AM</string>
+				<string>3:00 AM</string>
+				<string>4:00 AM</string>
+				<string>5:00 AM</string>
+				<string>6:00 AM</string>
+				<string>7:00 AM</string>
+				<string>8:00 AM</string>
+				<string>9:00 AM</string>
+				<string>10:00 AM</string>
+				<string>11:00 AM</string>
+				<string>12:00 PM (noon)</string>
+				<string>1:00 PM</string>
+				<string>2:00 PM</string>
+				<string>3:00 PM</string>
+				<string>4:00 PM</string>
+				<string>5:00 PM</string>
+				<string>6:00 PM</string>
+				<string>7:00 PM</string>
+				<string>8:00 PM</string>
+				<string>9:00 PM</string>
+				<string>10:00 PM</string>
+				<string>11:00 PM</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>3</integer>
+				<integer>4</integer>
+				<integer>5</integer>
+				<integer>6</integer>
+				<integer>7</integer>
+				<integer>8</integer>
+				<integer>9</integer>
+				<integer>10</integer>
+				<integer>11</integer>
+				<integer>12</integer>
+				<integer>13</integer>
+				<integer>14</integer>
+				<integer>15</integer>
+				<integer>16</integer>
+				<integer>17</integer>
+				<integer>18</integer>
+				<integer>19</integer>
+				<integer>20</integer>
+				<integer>21</integer>
+				<integer>22</integer>
+				<integer>23</integer>
+			</array>
+			<key>Key</key>
+			<string>notify_christmas_time</string>
+			<key>DefaultValue</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Note: You must restart the app for changes to take effect.</string>
+		</dict>
+	</array>
+</dict>
+</plist>

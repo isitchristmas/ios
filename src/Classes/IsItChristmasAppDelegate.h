@@ -14,6 +14,9 @@
 	IsItChristmasViewController *iicController;
 }
 
+- (void)setupNotifications;
+- (void)setupDefaults;
+
 @property (nonatomic, retain) UIWindow *window;
 @property (nonatomic, retain) IsItChristmasViewController *iicController;
 

@@ -23,6 +23,7 @@
 		CA2B1816128F3C6300110437 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2B1811128F3C6300110437 /* Icon-Small@2x.png */; };
 		CA2B1817128F3C6300110437 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2B1812128F3C6300110437 /* Icon.png */; };
 		CA2B1818128F3C6300110437 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA2B1813128F3C6300110437 /* Icon@2x.png */; };
+		CA671B3D12A19022001533FD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CA671B3C12A19022001533FD /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		CA2B1811128F3C6300110437 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		CA2B1812128F3C6300110437 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		CA2B1813128F3C6300110437 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		CA671B3C12A19022001533FD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 				1CF5FEDF10CA16B30002AF14 /* iTunesArtwork */,
 				CA2B17E4128F336200110437 /* MainWindow-iPad.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				CA671B3C12A19022001533FD /* Settings.bundle */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				CA2B1816128F3C6300110437 /* Icon-Small@2x.png in Resources */,
 				CA2B1817128F3C6300110437 /* Icon.png in Resources */,
 				CA2B1818128F3C6300110437 /* Icon@2x.png in Resources */,
+				CA671B3D12A19022001533FD /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
