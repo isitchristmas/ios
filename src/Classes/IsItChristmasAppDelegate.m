@@ -58,7 +58,8 @@
 
 	//setup the calendar and get the current year
 	NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-	NSDateComponents *currentComponents = [calendar components:NSYearCalendarUnit fromDate:[NSDate date]];
+	NSDate *now = [NSDate date];
+	NSDateComponents *currentComponents = [calendar components:NSYearCalendarUnit fromDate:now];
 	NSInteger currentYear = [currentComponents year];
 	
 	//schedule daily notifications
@@ -77,25 +78,27 @@
 		[components setMonth:12];
 		[components setYear:currentYear];
 		[components setHour:(day == 25) ? timeChristmas : timeDecember];
-		[components setMinute:00];
-		NSDate *itemDate = [calendar dateFromComponents:components];
+		[components setMinute:0];
+		NSDate *fireDate = [calendar dateFromComponents:components];
 		
 		//setup the notification
 		UILocalNotification *notification = [[NSClassFromString(@"UILocalNotification") alloc] init];
-		notification.fireDate = itemDate;
+		notification.fireDate = fireDate;
 		notification.timeZone = [NSTimeZone defaultTimeZone];
 		notification.alertAction = @"View";
 		notification.soundName = UILocalNotificationDefaultSoundName;
 		notification.applicationIconBadgeNumber = 0;
 		notification.alertBody = (day == 25) ? @"YES" : @"NO";
 
-		//schedule notification for this year
-		[[UIApplication sharedApplication] scheduleLocalNotification:notification];
+		//schedule notification for this year if it is in the future
+		if (fireDate == [fireDate laterDate:now]) {
+			[[UIApplication sharedApplication] scheduleLocalNotification:notification];
+		}
 		
 		//schedule notification for next year
 		[components setYear:currentYear+1];
-		itemDate = [calendar dateFromComponents:components];
-		notification.fireDate = itemDate;
+		fireDate = [calendar dateFromComponents:components];
+		notification.fireDate = fireDate;
 		[[UIApplication sharedApplication] scheduleLocalNotification:notification];
 		
 		//clean up
