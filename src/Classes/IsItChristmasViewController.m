@@ -10,7 +10,7 @@
 
 @implementation IsItChristmasViewController
 @synthesize resultLabel, selectedLanguage, selectedCountry, languageYesDict, languageNoDict;
-static int padding = 10;
+static int _kPadding = 10;
 
 //load the view
 - (void)loadView {
@@ -70,7 +70,7 @@ static int padding = 10;
 	[super viewDidLoad];
 	
 	//initialize the resultLabel and use the whole screen
-	[self setResultLabel:[[UILabel alloc] initWithFrame:CGRectMake(padding, padding, self.view.frame.size.width - (padding * 2), self.view.frame.size.height - (padding * 2))]];
+	[self setResultLabel:[[UILabel alloc] initWithFrame:CGRectMake(_kPadding, _kPadding, self.view.frame.size.width - (_kPadding * 2), self.view.frame.size.height - (_kPadding * 2))]];
 	
 	//set the font, etc
 	[self.resultLabel setFont:[UIFont fontWithName:@"ArialMT" size:180.0]];
