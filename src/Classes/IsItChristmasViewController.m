@@ -19,22 +19,22 @@ static int padding = 10;
 	
 	//load the language dictionaries
 	NSBundle *mainBundle = [NSBundle mainBundle];
-	self.languageYesDict = [mainBundle objectForInfoDictionaryKey:@"LANGUAGE_YES"];
-	self.languageNoDict = [mainBundle objectForInfoDictionaryKey:@"LANGUAGE_NO"];
+	[self setLanguageYesDict:[mainBundle objectForInfoDictionaryKey:@"LANGUAGE_YES"]];
+	[self setLanguageNoDict:[mainBundle objectForInfoDictionaryKey:@"LANGUAGE_NO"]];
 	
 	//get the languages array and get the selected language
 	//the preferred language code is always the first item in the array
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
-	self.selectedLanguage = [languages objectAtIndex:0];
+	[self setSelectedLanguage:[languages objectAtIndex:0]];
 	
 	//get the country code
 	NSString *currentLocale = [defaults objectForKey:@"AppleLocale"];
-	self.selectedCountry = [currentLocale substringFromIndex:[currentLocale rangeOfString:@"_"].location+1];
+	[self setSelectedCountry:[currentLocale substringFromIndex:[currentLocale rangeOfString:@"_"].location+1]];
 	
 	//if the country code is canada, use the special language code
 	if ([[self.selectedCountry uppercaseString] isEqualToString:@"CA"]) {
-		self.selectedLanguage = @"ca";
+		[self setSelectedLanguage:@"ca"];
 	}
 }
 
@@ -73,10 +73,10 @@ static int padding = 10;
 	[self setResultLabel:[[UILabel alloc] initWithFrame:CGRectMake(padding, padding, self.view.frame.size.width - (padding * 2), self.view.frame.size.height - (padding * 2))]];
 	
 	//set the font, etc
-	self.resultLabel.font = [UIFont fontWithName:@"ArialMT" size:180.0];
-	self.resultLabel.adjustsFontSizeToFitWidth = YES;
-	self.resultLabel.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin;
-	self.resultLabel.textAlignment = UITextAlignmentCenter;
+	[self.resultLabel setFont:[UIFont fontWithName:@"ArialMT" size:180.0]];
+	[self.resultLabel setAdjustsFontSizeToFitWidth:YES];
+	[self.resultLabel setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin];
+	[self.resultLabel setTextAlignment:UITextAlignmentCenter];
 	
 	//add the results label to the screen
 	[self.view addSubview:self.resultLabel];
@@ -90,7 +90,7 @@ static int padding = 10;
 //this just sets the label test by calling isItChristmas
 //this is in its own method so we can call in a timer every five seconds
 - (void)setResultLabel {
-	self.resultLabel.text = [[self isItChristmas] uppercaseString];
+	[self.resultLabel setText:[[self isItChristmas] uppercaseString]];
 }
 
 //allow all orientations

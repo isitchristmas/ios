@@ -81,12 +81,12 @@
 			
 			//setup the notification
 			UILocalNotification *notification = [[NSClassFromString(@"UILocalNotification") alloc] init];
-			notification.fireDate = fireDate;
-			notification.timeZone = [NSTimeZone defaultTimeZone];
-			notification.alertAction = @"View";
-			notification.soundName = UILocalNotificationDefaultSoundName;
-			notification.applicationIconBadgeNumber = 0;
-			notification.alertBody = (day == 25) ? @"YES" : @"NO";
+			[notification setFireDate:fireDate];
+			[notification setTimeZone:[NSTimeZone defaultTimeZone]];
+			[notification setAlertAction:@"View"];
+			[notification setSoundName:UILocalNotificationDefaultSoundName];
+			[notification setApplicationIconBadgeNumber:0];
+			[notification setAlertBody:(day == 25) ? @"YES" : @"NO"];
 
 			//schedule notification for this year if it is in the future
 			if (fireDate == [fireDate laterDate:now]) {
@@ -96,7 +96,7 @@
 			//schedule notification for next year
 			[components setYear:currentYear+1];
 			fireDate = [calendar dateFromComponents:components];
-			notification.fireDate = fireDate;
+			[notification setFireDate:fireDate];
 			[[UIApplication sharedApplication] scheduleLocalNotification:notification];
             
 		}
