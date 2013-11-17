@@ -18,7 +18,7 @@
 	self.iicController = tmpController;
 	
 	//add the view controller to the window
-	[self.window addSubview:self.iicController.view];
+    [self.window setRootViewController:self.iicController];
 
 	// Override point for customization after application launch
 	[window makeKeyAndVisible];
