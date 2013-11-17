@@ -14,8 +14,7 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application {   
 	
 	//setup the main view controller
-	IsItChristmasViewController *tmpController = [[IsItChristmasViewController alloc] init];
-	self.iicController = tmpController;
+	[self setIicController:[[IsItChristmasViewController alloc] init]];
 	
 	//add the view controller to the window
     [self.window setRootViewController:self.iicController];
