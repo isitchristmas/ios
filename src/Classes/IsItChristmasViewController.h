@@ -19,10 +19,10 @@
 
 - (void)setResultLabel;
 
-@property (nonatomic, retain) NSDictionary *languageYesDict;
-@property (nonatomic, retain) NSDictionary *languageNoDict;
-@property (nonatomic, retain) NSString *selectedLanguage;
-@property (nonatomic, retain) NSString *selectedCountry;
-@property (nonatomic, retain) UILabel *resultLabel;
+@property (nonatomic, strong) NSDictionary *languageYesDict;
+@property (nonatomic, strong) NSDictionary *languageNoDict;
+@property (nonatomic, strong) NSString *selectedLanguage;
+@property (nonatomic, strong) NSString *selectedCountry;
+@property (nonatomic, strong) UILabel *resultLabel;
 
 @end

@@ -16,7 +16,6 @@
 	//setup the main view controller
 	IsItChristmasViewController *tmpController = [[IsItChristmasViewController alloc] init];
 	self.iicController = tmpController;
-	[tmpController release];
 	
 	//add the view controller to the window
 	[self.window addSubview:self.iicController.view];
@@ -39,76 +38,72 @@
 - (void)setupNotifications {
 	
 	//this is running on a background thread so it needs its own autorelease pool
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
-	//cancel all previously scheduled notifications
-	[[UIApplication sharedApplication] cancelAllLocalNotifications];
-	
-	//get user settings
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	BOOL notifyDecember = [defaults boolForKey:@"notify_december"];
-	BOOL notifyChristmas = [defaults boolForKey:@"notify_christmas"];
-	int timeDecember = [defaults integerForKey:@"notify_december_time"];
-	int timeChristmas = [defaults integerForKey:@"notify_christmas_time"];
-	
-	//if no notifications are enabled, return now
-	if (!notifyChristmas && !notifyDecember) {
-		return;
-	}
-
-	//setup the calendar and get the current year
-	NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-	NSDate *now = [NSDate date];
-	NSDateComponents *currentComponents = [calendar components:NSYearCalendarUnit fromDate:now];
-	NSInteger currentYear = [currentComponents year];
-	
-	//schedule daily notifications
-	for (int day = 1; day <= 31; day++) {
+        //cancel all previously scheduled notifications
+		[[UIApplication sharedApplication] cancelAllLocalNotifications];
 		
-		//if notifications are off for this day, skip it
-		if (day == 25 && !notifyChristmas) {
-			continue;
-		} else if (day != 25 && !notifyDecember) {
-			continue;
+		//get user settings
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		BOOL notifyDecember = [defaults boolForKey:@"notify_december"];
+		BOOL notifyChristmas = [defaults boolForKey:@"notify_christmas"];
+		int timeDecember = [defaults integerForKey:@"notify_december_time"];
+		int timeChristmas = [defaults integerForKey:@"notify_christmas_time"];
+		
+		//if no notifications are enabled, return now
+		if (!notifyChristmas && !notifyDecember) {
+			return;
 		}
-		
-		//set the date/time for the notification
-		NSDateComponents *components = [[NSDateComponents alloc] init];
-		[components setDay:day];
-		[components setMonth:12];
-		[components setYear:currentYear];
-		[components setHour:(day == 25) ? timeChristmas : timeDecember];
-		[components setMinute:0];
-		NSDate *fireDate = [calendar dateFromComponents:components];
-		
-		//setup the notification
-		UILocalNotification *notification = [[NSClassFromString(@"UILocalNotification") alloc] init];
-		notification.fireDate = fireDate;
-		notification.timeZone = [NSTimeZone defaultTimeZone];
-		notification.alertAction = @"View";
-		notification.soundName = UILocalNotificationDefaultSoundName;
-		notification.applicationIconBadgeNumber = 0;
-		notification.alertBody = (day == 25) ? @"YES" : @"NO";
 
-		//schedule notification for this year if it is in the future
-		if (fireDate == [fireDate laterDate:now]) {
+		//setup the calendar and get the current year
+		NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+		NSDate *now = [NSDate date];
+		NSDateComponents *currentComponents = [calendar components:NSYearCalendarUnit fromDate:now];
+		NSInteger currentYear = [currentComponents year];
+		
+		//schedule daily notifications
+		for (int day = 1; day <= 31; day++) {
+			
+			//if notifications are off for this day, skip it
+			if (day == 25 && !notifyChristmas) {
+				continue;
+			} else if (day != 25 && !notifyDecember) {
+				continue;
+			}
+			
+			//set the date/time for the notification
+			NSDateComponents *components = [[NSDateComponents alloc] init];
+			[components setDay:day];
+			[components setMonth:12];
+			[components setYear:currentYear];
+			[components setHour:(day == 25) ? timeChristmas : timeDecember];
+			[components setMinute:0];
+			NSDate *fireDate = [calendar dateFromComponents:components];
+			
+			//setup the notification
+			UILocalNotification *notification = [[NSClassFromString(@"UILocalNotification") alloc] init];
+			notification.fireDate = fireDate;
+			notification.timeZone = [NSTimeZone defaultTimeZone];
+			notification.alertAction = @"View";
+			notification.soundName = UILocalNotificationDefaultSoundName;
+			notification.applicationIconBadgeNumber = 0;
+			notification.alertBody = (day == 25) ? @"YES" : @"NO";
+
+			//schedule notification for this year if it is in the future
+			if (fireDate == [fireDate laterDate:now]) {
+				[[UIApplication sharedApplication] scheduleLocalNotification:notification];
+			}
+			
+			//schedule notification for next year
+			[components setYear:currentYear+1];
+			fireDate = [calendar dateFromComponents:components];
+			notification.fireDate = fireDate;
 			[[UIApplication sharedApplication] scheduleLocalNotification:notification];
+            
 		}
-		
-		//schedule notification for next year
-		[components setYear:currentYear+1];
-		fireDate = [calendar dateFromComponents:components];
-		notification.fireDate = fireDate;
-		[[UIApplication sharedApplication] scheduleLocalNotification:notification];
-		
-		//clean up
-		[notification release];
-		[components release];
+        
 	}
-
-	//clean up
-	[calendar release];
-	[pool release];
+    
 }
 
 //make sure that the default settings are actually set
@@ -144,12 +139,6 @@
 	
     //write the changes to disk
     [defaults synchronize];
-}
-
-- (void)dealloc {
-	[self.iicController release];
-	[self.window release];
-	[super dealloc];
 }
 
 @end

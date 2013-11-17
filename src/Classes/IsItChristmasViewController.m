@@ -48,7 +48,6 @@ static int padding = 10;
 	NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
 	unsigned unitFlags = NSMonthCalendarUnit |  NSDayCalendarUnit;
 	NSDateComponents *dateComponents = [calendar components:unitFlags fromDate:[NSDate date]];
-	[calendar release];
 	
 	//check to see if it is christmas
 	if ([dateComponents month] == 12 && [dateComponents day] == 25) {
@@ -73,7 +72,6 @@ static int padding = 10;
 	//initialize the resultLabel and use the whole screen
 	UILabel *tmpLabel = [[UILabel alloc] initWithFrame:CGRectMake(padding, padding, self.view.frame.size.width - (padding * 2), self.view.frame.size.height - (padding * 2))];
 	self.resultLabel = tmpLabel;
-	[tmpLabel release];
 	
 	//set the font, etc
 	self.resultLabel.font = [UIFont fontWithName:@"ArialMT" size:180.0];
@@ -99,17 +97,6 @@ static int padding = 10;
 //allow all orientations
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
-}
-
-//release memory
-- (void)dealloc {
-	[self.resultLabel removeFromSuperview];
-	[self.resultLabel release];
-	[self.selectedLanguage release];
-	[self.selectedCountry release];
-	[self.languageYesDict release];
-	[self.languageYesDict release];
-    [super dealloc];
 }
 
 @end
