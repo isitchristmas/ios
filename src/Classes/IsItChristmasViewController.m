@@ -68,6 +68,9 @@ static int _kPadding = 10;
 - (void)viewDidLoad {
 	
 	[super viewDidLoad];
+    
+    //view background color
+    [self.view setBackgroundColor:[UIColor whiteColor]];
 	
 	//initialize the resultLabel and use the whole screen
 	[self setResultLabel:[[UILabel alloc] initWithFrame:CGRectMake(_kPadding, _kPadding, self.view.frame.size.width - (_kPadding * 2), self.view.frame.size.height - (_kPadding * 2))]];
