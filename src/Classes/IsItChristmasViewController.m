@@ -9,7 +9,6 @@
 #import "IsItChristmasViewController.h"
 
 @implementation IsItChristmasViewController
-@synthesize resultLabel, selectedLanguage, selectedCountry, languageYesDict, languageNoDict;
 static int _kPadding = 10;
 
 //load the view

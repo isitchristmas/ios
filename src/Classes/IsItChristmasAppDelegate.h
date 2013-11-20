@@ -9,10 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "IsItChristmasViewController.h"
 
-@interface IsItChristmasAppDelegate : NSObject <UIApplicationDelegate> {
-    UIWindow *window;
-	IsItChristmasViewController *iicController;
-}
+@interface IsItChristmasAppDelegate : NSObject <UIApplicationDelegate>
 
 - (void)setupNotifications;
 - (void)setupDefaults;

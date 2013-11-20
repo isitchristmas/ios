@@ -9,7 +9,6 @@
 #import "IsItChristmasAppDelegate.h"
 
 @implementation IsItChristmasAppDelegate
-@synthesize window, iicController;
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {   
 	
@@ -20,7 +19,7 @@
     [self.window setRootViewController:self.iicController];
 
 	// Override point for customization after application launch
-	[window makeKeyAndVisible];
+	[self.window makeKeyAndVisible];
 	
 	//make sure defaults are set
 	[self setupDefaults];

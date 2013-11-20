@@ -9,13 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface IsItChristmasViewController : UIViewController {
-	NSDictionary *languageYesDict;
-	NSDictionary *languageNoDict;
-	NSString *selectedLanguage;
-	NSString *selectedCountry;
-	UILabel *resultLabel;
-}
+@interface IsItChristmasViewController : UIViewController
 
 - (void)setResultLabel;
 
