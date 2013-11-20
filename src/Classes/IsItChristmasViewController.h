@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreMotion/CoreMotion.h>
 
-
-@interface IsItChristmasViewController : UIViewController
+@interface IsItChristmasViewController : UIViewController {
+    BOOL _dynamicsAvailable;
+}
 
 - (void)setResultLabel;
 
@@ -18,5 +20,8 @@
 @property (nonatomic, strong) NSString *selectedLanguage;
 @property (nonatomic, strong) NSString *selectedCountry;
 @property (nonatomic, strong) UILabel *resultLabel;
+@property (nonatomic, strong) UIDynamicAnimator *animator;
+@property (nonatomic, strong) UIGravityBehavior *gravity;
+@property (nonatomic, strong) CMMotionManager *motionManager;
 
 @end

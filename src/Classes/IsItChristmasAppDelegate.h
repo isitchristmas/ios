@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreMotion/CoreMotion.h>
 #import "IsItChristmasViewController.h"
 
 @interface IsItChristmasAppDelegate : NSObject <UIApplicationDelegate>
@@ -16,6 +17,7 @@
 
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) IsItChristmasViewController *iicController;
+@property (nonatomic, strong) CMMotionManager *motionManager;
 
 @end
 

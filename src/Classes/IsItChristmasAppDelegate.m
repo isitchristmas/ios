@@ -139,4 +139,14 @@
     [defaults synchronize];
 }
 
+#pragma mark - core motion
+
+//shared motion manager
+- (CMMotionManager *)motionManager {
+    if (!_motionManager) {
+        _motionManager = [[CMMotionManager alloc] init];
+    }
+    return _motionManager;
+}
+
 @end

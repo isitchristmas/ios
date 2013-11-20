@@ -7,6 +7,9 @@
 //
 
 #import "IsItChristmasViewController.h"
+#import "IsItChristmasAppDelegate.h"
+
+#define DEGREES_TO_RADIANS(x) (M_PI * x / 180.0)
 
 @implementation IsItChristmasViewController
 static int _kPadding = 10;
@@ -87,6 +90,70 @@ static int _kPadding = 10;
 	//then every 5 seconds check to see if it is christmas
 	[self setResultLabel];
 	[NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(setResultLabel) userInfo:nil repeats:YES];
+    
+    //uidynamics test
+    [self setupDynamics];
+}
+
+- (void)setupDynamics {
+    
+    //check to see if UIDynamics is available (iOS 7+)
+    //if it is not available, quit now
+    if (!NSClassFromString(@"UIDynamicAnimator")) {
+        return;
+    }
+    _dynamicsAvailable = YES;
+    
+    //setup the animator
+    [self setAnimator:[[UIDynamicAnimator alloc] initWithReferenceView:self.view]];
+    
+    //test view
+    UIView *testView = [[UIView alloc] initWithFrame:CGRectMake(100.0f, 100.0f, 50.0f, 50.0f)];
+    [testView setBackgroundColor:[UIColor redColor]];
+    [testView setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(30))];
+    [testView setCenter:CGPointMake(25.0f, 10.0f)];
+    [self.view addSubview:testView];
+    
+    //test view
+    UIView *testView2 = [[UIView alloc] initWithFrame:CGRectMake(100.0f, 100.0f, 50.0f, 50.0f)];
+    [testView2 setBackgroundColor:[UIColor greenColor]];
+    [testView2 setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(45))];
+    [testView2 setCenter:CGPointMake(55.0f, 20.0f)];
+    [self.view addSubview:testView2];
+    
+    //test view
+    UIView *testView3 = [[UIView alloc] initWithFrame:CGRectMake(100.0f, 100.0f, 50.0f, 50.0f)];
+    [testView3 setBackgroundColor:[UIColor blueColor]];
+    [testView3 setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(55))];
+    [testView3 setCenter:CGPointMake(15.0f, 80.0f)];
+    [self.view addSubview:testView3];
+    
+    //gravity
+    [self setGravity:[[UIGravityBehavior alloc] initWithItems:@[testView, testView2, testView3]]];
+    [self.animator addBehavior:self.gravity];
+    
+    //collisions
+    UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:self.gravity.items];
+    [collision setTranslatesReferenceBoundsIntoBoundary:YES];
+    [self.animator addBehavior:collision];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    //start detecting motion
+    if (_dynamicsAvailable) {
+        [self startMyMotionDetect];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    //stop detecting motion
+    if (_dynamicsAvailable) {
+        [self.motionManager stopAccelerometerUpdates];
+    }
 }
 
 //this just sets the label test by calling isItChristmas
@@ -101,8 +168,31 @@ static int _kPadding = 10;
 }
 
 //allow all orientations iOS 6+
-- (NSUInteger)supportedInterfaceOrientations{
-    return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortraitUpsideDown);
+- (NSUInteger)supportedInterfaceOrientations {
+    //don't allow rotation for now while testing uidynamics
+    return UIInterfaceOrientationMaskPortrait;
+//    return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortraitUpsideDown);
+}
+
+#pragma mark - core motion
+
+//returns the maain motion manager from the app delegate
+- (CMMotionManager *)motionManager {
+    IsItChristmasAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    return appDelegate.motionManager;
+}
+
+//updates the UIGravityBehavior based on the accelerometer
+- (void)startMyMotionDetect {
+    
+    const float speed = 2.0f;
+    [self.motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMAccelerometerData *data, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CGVector gravityDirection = {data.acceleration.x * speed, -data.acceleration.y * speed};
+            [self.gravity setGravityDirection:gravityDirection];
+        });
+    }];
+    
 }
 
 @end
