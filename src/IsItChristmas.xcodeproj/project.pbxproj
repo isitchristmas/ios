@@ -15,9 +15,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
-		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
-		CA2B17E5128F336200110437 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA2B17E4128F336200110437 /* MainWindow-iPad.xib */; };
-		CA49AD29183C553000C0E335 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA49AD28183C553000C0E335 /* CoreMotion.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		47F1AB761840F6EA003D98FC /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F1AB751840F6EA003D98FC /* CoreMotion.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CA671B3D12A19022001533FD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CA671B3C12A19022001533FD /* Settings.bundle */; };
 		CAF9D7FD18395379003313B7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAF9D7FC18395379003313B7 /* Images.xcassets */; };
 /* End PBXBuildFile section */
@@ -33,12 +31,10 @@
 		1D6058910D05DD3D006BFB54 /* IsItChristmas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsItChristmas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* IsItChristmas_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsItChristmas_Prefix.pch; sourceTree = "<group>"; };
+		47F1AB751840F6EA003D98FC /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* IsItChristmas-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IsItChristmas-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		CA2B17E4128F336200110437 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-iPad.xib"; sourceTree = "<group>"; };
-		CA49AD28183C553000C0E335 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		CA671B3C12A19022001533FD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		CAF9D7FC18395379003313B7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = IsItChristmas/Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -48,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA49AD29183C553000C0E335 /* CoreMotion.framework in Frameworks */,
+				47F1AB761840F6EA003D98FC /* CoreMotion.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -105,8 +101,6 @@
 				CAF9D7FC18395379003313B7 /* Images.xcassets */,
 				8D1107310486CEB800E47090 /* IsItChristmas-Info.plist */,
 				1CF5FEDF10CA16B30002AF14 /* iTunesArtwork */,
-				CA2B17E4128F336200110437 /* MainWindow-iPad.xib */,
-				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				CA671B3C12A19022001533FD /* Settings.bundle */,
 			);
 			name = Resources;
@@ -115,10 +109,10 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
-				CA49AD28183C553000C0E335 /* CoreMotion.framework */,
-				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				47F1AB751840F6EA003D98FC /* CoreMotion.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -175,10 +169,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				1CA76B1D10E855BA0050EAFA /* Entitlements.plist in Resources */,
 				1CF5FEE010CA16B30002AF14 /* iTunesArtwork in Resources */,
-				CA2B17E5128F336200110437 /* MainWindow-iPad.xib in Resources */,
 				CA671B3D12A19022001533FD /* Settings.bundle in Resources */,
 				CAF9D7FD18395379003313B7 /* Images.xcassets in Resources */,
 			);

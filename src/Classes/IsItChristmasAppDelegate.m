@@ -10,19 +10,20 @@
 
 @implementation IsItChristmasAppDelegate
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application {   
-	
-	//setup the main view controller
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    //setup the window
+    [self setWindow:[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]];
+    [self.window makeKeyAndVisible];
+    
+    //setup the main view controller
 	[self setIicController:[[IsItChristmasViewController alloc] init]];
-	
-	//add the view controller to the window
     [self.window setRootViewController:self.iicController];
-
-	// Override point for customization after application launch
-	[self.window makeKeyAndVisible];
 	
 	//make sure defaults are set
 	[self setupDefaults];
+    
+    return YES;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
