@@ -87,6 +87,7 @@ static const int _kDynamicItemPadding = 50;
 	//set the font, etc
 	[self.resultLabel setFont:[UIFont fontWithName:@"ArialMT" size:180.0]];
 	[self.resultLabel setAdjustsFontSizeToFitWidth:YES];
+    [self.resultLabel setBackgroundColor:[UIColor clearColor]];
 	[self.resultLabel setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin];
 	[self.resultLabel setTextAlignment:UITextAlignmentCenter];
 	
@@ -126,7 +127,7 @@ static const int _kDynamicItemPadding = 50;
         //add the view with a semi-random starting point
         float randomX = (arc4random() % ((int)self.view.frame.size.width - _kDynamicItemPadding)) + _kDynamicItemPadding;
         [dynamicLabel setCenter:CGPointMake(randomX, _kDynamicItemPadding)];
-        [self.view addSubview:dynamicLabel];
+        [self.view insertSubview:dynamicLabel atIndex:0];
         NSLog(@"randomX: %f", randomX);
         
         //limit the total number of views for now
