@@ -12,6 +12,7 @@
 
 @implementation IsItChristmasViewController
 static const int _kPadding = 10;
+static const float _kDampenAmount = 0.2f;
 static const float _kGravity = 2.0f;
 static const int _kMaxDynamicItems = 5;
 static const int _kDynamicItemPadding = 50;
@@ -199,7 +200,41 @@ static const int _kDynamicItemPadding = 50;
             [self.gravity setGravityDirection:gravityDirection];
         });
     }];
+}
+
+#pragma mark - UICollisionBehaviorDelegate
+
+//bounce items off of each other
+- (void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item1 withItem:(id<UIDynamicItem>)item2 atPoint:(CGPoint)p {
+    [self pushItem:item1];
+}
+
+//bounce items off of the wall
+- (void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p {
+    [self pushItem:item];
+}
+
+//item collision ended, remove the bounce effect
+- (void)collisionBehavior:(UICollisionBehavior *)behavior endedContactForItem:(id<UIDynamicItem>)item1 withItem:(id<UIDynamicItem>)item2 {
+    [self.pushBehavior removeItem:item1];
+}
+
+//wall collision ended, remove the bounce effect
+- (void)collisionBehavior:(UICollisionBehavior *)behavior endedContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier {
+    [self.pushBehavior removeItem:item];
+}
+
+//push an item the opposite direction of gravity to simulate a bounce effect
+- (void)pushItem:(id<UIDynamicItem>)item {
     
+    //setup the push behavior if needed
+    if (!self.pushBehavior) {
+        [self setPushBehavior:[[UIPushBehavior alloc] initWithItems:nil mode:UIPushBehaviorModeInstantaneous]];
+    }
+    [self.pushBehavior setPushDirection:CGVectorMake(-self.gravity.gravityDirection.dx * _kDampenAmount, -self.gravity.gravityDirection.dy * _kDampenAmount)];
+    [self.pushBehavior addItem:item];
+    [self.pushBehavior setActive:YES];
+    [self.animator addBehavior:self.pushBehavior];
 }
 
 @end

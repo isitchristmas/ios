@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
 
-@interface IsItChristmasViewController : UIViewController {
+@interface IsItChristmasViewController : UIViewController <UICollisionBehaviorDelegate> {
     BOOL _dynamicsAvailable;
 }
 
@@ -24,5 +24,6 @@
 @property (nonatomic, strong) UIDynamicAnimator *animator;
 @property (nonatomic, strong) UIGravityBehavior *gravity;
 @property (nonatomic, strong) CMMotionManager *motionManager;
+@property (nonatomic, strong) UIPushBehavior *pushBehavior;
 
 @end
