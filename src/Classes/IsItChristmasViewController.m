@@ -8,8 +8,7 @@
 
 #import "IsItChristmasViewController.h"
 #import "IsItChristmasAppDelegate.h"
-
-#define DEGREES_TO_RADIANS(x) (M_PI * x / 180.0)
+#import "IICDynamicLabel.h"
 
 @implementation IsItChristmasViewController
 static int _kPadding = 10;
@@ -27,8 +26,8 @@ static int _kPadding = 10;
 	//get the languages array and get the selected language
 	//the preferred language code is always the first item in the array
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
-	[self setSelectedLanguage:[languages objectAtIndex:0]];
+	[self setLanguages:[defaults objectForKey:@"AppleLanguages"]];
+	[self setSelectedLanguage:[self.languages objectAtIndex:0]];
 	
 	//get the country code
 	NSString *currentLocale = [defaults objectForKey:@"AppleLocale"];
@@ -40,8 +39,13 @@ static int _kPadding = 10;
 	}
 }
 
-//returns yes/no as a string in the localized language
+//returns YES/NO as a string in the localized language
 - (NSString *)isItChristmas {
+    return [self isItChristmas:self.selectedLanguage];
+}
+
+//returns YES/NO as a string in the language requested
+- (NSString *)isItChristmas:(NSString *)language {
 	
 	//we default to no
 	BOOL isChristmas = NO;
@@ -57,13 +61,13 @@ static int _kPadding = 10;
 	}
 	
 	//if the preferred language is in our list, return yes/no
-	NSString *answer = (isChristmas) ? [self.languageYesDict objectForKey:self.selectedLanguage] : [self.languageNoDict objectForKey:self.selectedLanguage];
+	NSString *answer = (isChristmas) ? [self.languageYesDict objectForKey:language] : [self.languageNoDict objectForKey:language];
 	if (answer) {
 		return answer;
 	}
 	
 	//if the selected language isn't in our list, return english
-	return (isChristmas) ? @"yes" : @"no";
+	return (isChristmas) ? @"YES" : @"NO";
 }
 
 //additional setup after loading the view
@@ -107,33 +111,34 @@ static int _kPadding = 10;
     //setup the animator
     [self setAnimator:[[UIDynamicAnimator alloc] initWithReferenceView:self.view]];
     
-    //test view
-    UIView *testView = [[UIView alloc] initWithFrame:CGRectMake(100.0f, 100.0f, 50.0f, 50.0f)];
-    [testView setBackgroundColor:[UIColor redColor]];
-    [testView setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(30))];
-    [testView setCenter:CGPointMake(25.0f, 10.0f)];
-    [self.view addSubview:testView];
-    
-    //test view
-    UIView *testView2 = [[UIView alloc] initWithFrame:CGRectMake(100.0f, 100.0f, 50.0f, 50.0f)];
-    [testView2 setBackgroundColor:[UIColor greenColor]];
-    [testView2 setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(45))];
-    [testView2 setCenter:CGPointMake(55.0f, 20.0f)];
-    [self.view addSubview:testView2];
-    
-    //test view
-    UIView *testView3 = [[UIView alloc] initWithFrame:CGRectMake(100.0f, 100.0f, 50.0f, 50.0f)];
-    [testView3 setBackgroundColor:[UIColor blueColor]];
-    [testView3 setTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(55))];
-    [testView3 setCenter:CGPointMake(15.0f, 80.0f)];
-    [self.view addSubview:testView3];
+    //create a dynamic view for each language
+    NSMutableArray *dynamicViews = [[NSMutableArray alloc] initWithCapacity:self.languages.count];
+    int test = 1;
+    for (NSString *language in self.languages) {
+        
+        //create the label
+        IICDynamicLabel *dynamicLabel = [[IICDynamicLabel alloc] initText:[self isItChristmas:language]];
+        [dynamicViews addObject:dynamicLabel];
+        
+        //add the view with a semi-random starting point
+        float randomX = (arc4random() % ((int)self.view.frame.size.width - 20)) + 20;
+        [dynamicLabel setCenter:CGPointMake(randomX, 25.0f)];
+        [self.view addSubview:dynamicLabel];
+        NSLog(@"randomX: %f", randomX);
+        
+        //limit the total number of views for now
+        if (++test > 10) {
+            break;
+        }
+        
+    }
     
     //gravity
-    [self setGravity:[[UIGravityBehavior alloc] initWithItems:@[testView, testView2, testView3]]];
+    [self setGravity:[[UIGravityBehavior alloc] initWithItems:dynamicViews]];
     [self.animator addBehavior:self.gravity];
     
     //collisions
-    UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:self.gravity.items];
+    UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:dynamicViews];
     [collision setTranslatesReferenceBoundsIntoBoundary:YES];
     [self.animator addBehavior:collision];
 }
