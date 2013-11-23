@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1CA7689B10B89C7C0050EAFA /* IsItChristmasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA7689A10B89C7C0050EAFA /* IsItChristmasViewController.m */; };
-		1CA76B1D10E855BA0050EAFA /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CA76B1C10E855BA0050EAFA /* Entitlements.plist */; };
 		1CF5FEE010CA16B30002AF14 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 1CF5FEDF10CA16B30002AF14 /* iTunesArtwork */; };
 		1D3623260D0F684500981E51 /* IsItChristmasAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* IsItChristmasAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -24,7 +23,6 @@
 /* Begin PBXFileReference section */
 		1CA7689910B89C7C0050EAFA /* IsItChristmasViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsItChristmasViewController.h; sourceTree = "<group>"; };
 		1CA7689A10B89C7C0050EAFA /* IsItChristmasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IsItChristmasViewController.m; sourceTree = "<group>"; };
-		1CA76B1C10E855BA0050EAFA /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		1CF5FEDF10CA16B30002AF14 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* IsItChristmasAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsItChristmasAppDelegate.h; sourceTree = "<group>"; };
@@ -102,7 +100,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1CA76B1C10E855BA0050EAFA /* Entitlements.plist */,
 				CAF9D7FC18395379003313B7 /* Images.xcassets */,
 				8D1107310486CEB800E47090 /* IsItChristmas-Info.plist */,
 				1CF5FEDF10CA16B30002AF14 /* iTunesArtwork */,
@@ -179,7 +176,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CA76B1D10E855BA0050EAFA /* Entitlements.plist in Resources */,
 				1CF5FEE010CA16B30002AF14 /* iTunesArtwork in Resources */,
 				CA671B3D12A19022001533FD /* Settings.bundle in Resources */,
 				CAF9D7FD18395379003313B7 /* Images.xcassets in Resources */,
@@ -298,7 +294,6 @@
 		C01FCF5008A954540054247B /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
