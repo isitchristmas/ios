@@ -11,7 +11,9 @@
 #import "IICDynamicLabel.h"
 
 @implementation IsItChristmasViewController
-static int _kPadding = 10;
+static const int _kPadding = 10;
+static const float _kGravity = 2.0f;
+static const int _kMaxDynamicItems = 5;
 
 //load the view
 - (void)loadView {
@@ -127,10 +129,9 @@ static int _kPadding = 10;
         NSLog(@"randomX: %f", randomX);
         
         //limit the total number of views for now
-        if (++test > 10) {
+        if (++test > _kMaxDynamicItems) {
             break;
         }
-        
     }
     
     //gravity
@@ -139,6 +140,7 @@ static int _kPadding = 10;
     
     //collisions
     UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:dynamicViews];
+    [collision setCollisionDelegate:self];
     [collision setTranslatesReferenceBoundsIntoBoundary:YES];
     [self.animator addBehavior:collision];
 }
@@ -189,11 +191,9 @@ static int _kPadding = 10;
 
 //updates the UIGravityBehavior based on the accelerometer
 - (void)startMyMotionDetect {
-    
-    const float speed = 2.0f;
     [self.motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMAccelerometerData *data, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            CGVector gravityDirection = {data.acceleration.x * speed, -data.acceleration.y * speed};
+            CGVector gravityDirection = { data.acceleration.x * _kGravity, -data.acceleration.y * _kGravity };
             [self.gravity setGravityDirection:gravityDirection];
         });
     }];
