@@ -36,7 +36,13 @@
 		<string>OHI</string>
 		<key>en</key>
 		<string>NO</string>
+		<key>en-AU</key>
+		<string>NO</string>
+		<key>en-GB</key>
+		<string>NO</string>
 		<key>es</key>
+		<string>NO</string>
+		<key>es-MX</key>
 		<string>NO</string>
 		<key>et</key>
 		<string>EI</string>
@@ -88,6 +94,8 @@
 		<string>HAYIR</string>
 		<key>uk</key>
 		<string>NI</string>
+		<key>vi</key>
+		<string>SAI</string>
 		<key>zh-Hans</key>
 		<string>BÙ SHÌ</string>
 		<key>zh-Hant</key>
@@ -109,7 +117,13 @@
 		<string>NE</string>
 		<key>en</key>
 		<string>YES</string>
+		<key>en-AU</key>
+		<string>YES</string>
+		<key>en-GB</key>
+		<string>YES</string>
 		<key>es</key>
+		<string>SÍ</string>
+		<key>es-MX</key>
 		<string>SÍ</string>
 		<key>et</key>
 		<string>JAA</string>
@@ -161,6 +175,8 @@
 		<string>EVET</string>
 		<key>uk</key>
 		<string>TAK</string>
+		<key>vi</key>
+		<string>ÄÃšNG</string>
 		<key>zh-Hans</key>
 		<string>SHI</string>
 		<key>zh-Hant</key>
