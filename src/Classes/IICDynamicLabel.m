@@ -28,13 +28,13 @@
 
 + (UIFont *)font {
     static UIFont *font = nil;
-    if (!font) font = [UIFont fontWithName:@"ArialMT" size:20.0f];
+    if (!font) font = [UIFont fontWithName:@"ArialMT" size:30.0f];
     return font;
 }
 
 + (UIColor *)textColor {
     static UIColor *color = nil;
-    if (!color) color = [UIColor lightGrayColor];
+    if (!color) color = [UIColor colorWithWhite:0.8f alpha:1.0f];
     return color;
 }
 

@@ -14,6 +14,7 @@
 static const int _kPadding = 10;
 static const float _kGravity = 2.0f;
 static const int _kMaxDynamicItems = 5;
+static const int _kDynamicItemPadding = 50;
 
 //load the view
 - (void)loadView {
@@ -123,8 +124,8 @@ static const int _kMaxDynamicItems = 5;
         [dynamicViews addObject:dynamicLabel];
         
         //add the view with a semi-random starting point
-        float randomX = (arc4random() % ((int)self.view.frame.size.width - 20)) + 20;
-        [dynamicLabel setCenter:CGPointMake(randomX, 25.0f)];
+        float randomX = (arc4random() % ((int)self.view.frame.size.width - _kDynamicItemPadding)) + _kDynamicItemPadding;
+        [dynamicLabel setCenter:CGPointMake(randomX, _kDynamicItemPadding)];
         [self.view addSubview:dynamicLabel];
         NSLog(@"randomX: %f", randomX);
         
