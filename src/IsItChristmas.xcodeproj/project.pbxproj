@@ -15,6 +15,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		4701DC271841050C009DDE6A /* IICDynamicLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4701DC261841050C009DDE6A /* IICDynamicLabel.m */; };
+		4701DC2A18413F48009DDE6A /* IICDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4701DC2918413F48009DDE6A /* IICDynamicViewController.m */; };
 		47F1AB761840F6EA003D98FC /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F1AB751840F6EA003D98FC /* CoreMotion.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CA671B3D12A19022001533FD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CA671B3C12A19022001533FD /* Settings.bundle */; };
 		CAF9D7FD18395379003313B7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAF9D7FC18395379003313B7 /* Images.xcassets */; };
@@ -34,6 +35,8 @@
 		32CA4F630368D1EE00C91783 /* IsItChristmas_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsItChristmas_Prefix.pch; sourceTree = "<group>"; };
 		4701DC251841050C009DDE6A /* IICDynamicLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IICDynamicLabel.h; sourceTree = "<group>"; };
 		4701DC261841050C009DDE6A /* IICDynamicLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IICDynamicLabel.m; sourceTree = "<group>"; };
+		4701DC2818413F48009DDE6A /* IICDynamicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IICDynamicViewController.h; sourceTree = "<group>"; };
+		4701DC2918413F48009DDE6A /* IICDynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IICDynamicViewController.m; sourceTree = "<group>"; };
 		47F1AB751840F6EA003D98FC /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* IsItChristmas-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IsItChristmas-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		CA671B3C12A19022001533FD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -58,12 +61,14 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4701DC251841050C009DDE6A /* IICDynamicLabel.h */,
+				4701DC261841050C009DDE6A /* IICDynamicLabel.m */,
+				4701DC2818413F48009DDE6A /* IICDynamicViewController.h */,
+				4701DC2918413F48009DDE6A /* IICDynamicViewController.m */,
 				1D3623240D0F684500981E51 /* IsItChristmasAppDelegate.h */,
 				1D3623250D0F684500981E51 /* IsItChristmasAppDelegate.m */,
 				1CA7689910B89C7C0050EAFA /* IsItChristmasViewController.h */,
 				1CA7689A10B89C7C0050EAFA /* IsItChristmasViewController.m */,
-				4701DC251841050C009DDE6A /* IICDynamicLabel.h */,
-				4701DC261841050C009DDE6A /* IICDynamicLabel.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -193,6 +198,7 @@
 				1D3623260D0F684500981E51 /* IsItChristmasAppDelegate.m in Sources */,
 				4701DC271841050C009DDE6A /* IICDynamicLabel.m in Sources */,
 				1CA7689B10B89C7C0050EAFA /* IsItChristmasViewController.m in Sources */,
+				4701DC2A18413F48009DDE6A /* IICDynamicViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

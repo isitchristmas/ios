@@ -7,15 +7,10 @@
 //
 
 #import "IsItChristmasViewController.h"
-#import "IsItChristmasAppDelegate.h"
-#import "IICDynamicLabel.h"
+#import "IICDynamicViewController.h"
 
 @implementation IsItChristmasViewController
 static const int _kPadding = 10;
-static const float _kDampenAmount = 0.2f;
-static const float _kGravity = 2.0f;
-static const int _kMaxDynamicItems = 5;
-static const int _kDynamicItemPadding = 50;
 
 //load the view
 - (void)loadView {
@@ -41,6 +36,15 @@ static const int _kDynamicItemPadding = 50;
 	if ([[self.selectedCountry uppercaseString] isEqualToString:@"CA"]) {
 		[self setSelectedLanguage:@"ca"];
 	}
+    
+    //check to see if UIDynamics is available (iOS 7+)
+    //if available, add the dynamic view controller as a child controller
+    if (NSClassFromString(@"UIDynamicAnimator")) {
+        IICDynamicViewController *dynamicController = [[IICDynamicViewController alloc] init];
+        [self addChildViewController:dynamicController];
+        [self.view addSubview:dynamicController.view];
+    }
+
 }
 
 //returns YES/NO as a string in the localized language
@@ -100,70 +104,6 @@ static const int _kDynamicItemPadding = 50;
 	[self setResultLabel];
 	[NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(setResultLabel) userInfo:nil repeats:YES];
     
-    //uidynamics test
-    [self setupDynamics];
-}
-
-- (void)setupDynamics {
-    
-    //check to see if UIDynamics is available (iOS 7+)
-    //if it is not available, quit now
-    if (!NSClassFromString(@"UIDynamicAnimator")) {
-        return;
-    }
-    _dynamicsAvailable = YES;
-    
-    //setup the animator
-    [self setAnimator:[[UIDynamicAnimator alloc] initWithReferenceView:self.view]];
-    
-    //create a dynamic view for each language
-    NSMutableArray *dynamicViews = [[NSMutableArray alloc] initWithCapacity:self.languages.count];
-    int test = 1;
-    for (NSString *language in self.languages) {
-        
-        //create the label
-        IICDynamicLabel *dynamicLabel = [[IICDynamicLabel alloc] initText:[self isItChristmas:language]];
-        [dynamicViews addObject:dynamicLabel];
-        
-        //add the view with a semi-random starting point
-        float randomX = (arc4random() % ((int)self.view.frame.size.width - _kDynamicItemPadding)) + _kDynamicItemPadding;
-        [dynamicLabel setCenter:CGPointMake(randomX, _kDynamicItemPadding)];
-        [self.view insertSubview:dynamicLabel atIndex:0];
-        NSLog(@"randomX: %f", randomX);
-        
-        //limit the total number of views for now
-        if (++test > _kMaxDynamicItems) {
-            break;
-        }
-    }
-    
-    //gravity
-    [self setGravity:[[UIGravityBehavior alloc] initWithItems:dynamicViews]];
-    [self.animator addBehavior:self.gravity];
-    
-    //collisions
-    UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:dynamicViews];
-    [collision setCollisionDelegate:self];
-    [collision setTranslatesReferenceBoundsIntoBoundary:YES];
-    [self.animator addBehavior:collision];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    //start detecting motion
-    if (_dynamicsAvailable) {
-        [self startMyMotionDetect];
-    }
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    
-    //stop detecting motion
-    if (_dynamicsAvailable) {
-        [self.motionManager stopAccelerometerUpdates];
-    }
 }
 
 //this just sets the label test by calling isItChristmas
@@ -182,59 +122,6 @@ static const int _kDynamicItemPadding = 50;
     //don't allow rotation for now while testing uidynamics
     return UIInterfaceOrientationMaskPortrait;
 //    return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortraitUpsideDown);
-}
-
-#pragma mark - core motion
-
-//returns the maain motion manager from the app delegate
-- (CMMotionManager *)motionManager {
-    IsItChristmasAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    return appDelegate.motionManager;
-}
-
-//updates the UIGravityBehavior based on the accelerometer
-- (void)startMyMotionDetect {
-    [self.motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMAccelerometerData *data, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            CGVector gravityDirection = { data.acceleration.x * _kGravity, -data.acceleration.y * _kGravity };
-            [self.gravity setGravityDirection:gravityDirection];
-        });
-    }];
-}
-
-#pragma mark - UICollisionBehaviorDelegate
-
-//bounce items off of each other
-- (void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item1 withItem:(id<UIDynamicItem>)item2 atPoint:(CGPoint)p {
-    [self pushItem:item1];
-}
-
-//bounce items off of the wall
-- (void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p {
-    [self pushItem:item];
-}
-
-//item collision ended, remove the bounce effect
-- (void)collisionBehavior:(UICollisionBehavior *)behavior endedContactForItem:(id<UIDynamicItem>)item1 withItem:(id<UIDynamicItem>)item2 {
-    [self.pushBehavior removeItem:item1];
-}
-
-//wall collision ended, remove the bounce effect
-- (void)collisionBehavior:(UICollisionBehavior *)behavior endedContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier {
-    [self.pushBehavior removeItem:item];
-}
-
-//push an item the opposite direction of gravity to simulate a bounce effect
-- (void)pushItem:(id<UIDynamicItem>)item {
-    
-    //setup the push behavior if needed
-    if (!self.pushBehavior) {
-        [self setPushBehavior:[[UIPushBehavior alloc] initWithItems:nil mode:UIPushBehaviorModeInstantaneous]];
-    }
-    [self.pushBehavior setPushDirection:CGVectorMake(-self.gravity.gravityDirection.dx * _kDampenAmount, -self.gravity.gravityDirection.dy * _kDampenAmount)];
-    [self.pushBehavior addItem:item];
-    [self.pushBehavior setActive:YES];
-    [self.animator addBehavior:self.pushBehavior];
 }
 
 @end

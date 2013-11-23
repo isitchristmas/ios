@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreMotion/CoreMotion.h>
 
-@interface IsItChristmasViewController : UIViewController <UICollisionBehaviorDelegate> {
-    BOOL _dynamicsAvailable;
-}
+@interface IsItChristmasViewController : UIViewController
 
 - (void)setResultLabel;
+- (NSString *)isItChristmas;
+- (NSString *)isItChristmas:(NSString *)language;
 
 @property (nonatomic, strong) NSDictionary *languageYesDict;
 @property (nonatomic, strong) NSDictionary *languageNoDict;
@@ -21,9 +20,5 @@
 @property (nonatomic, strong) NSString *selectedLanguage;
 @property (nonatomic, strong) NSString *selectedCountry;
 @property (nonatomic, strong) UILabel *resultLabel;
-@property (nonatomic, strong) UIDynamicAnimator *animator;
-@property (nonatomic, strong) UIGravityBehavior *gravity;
-@property (nonatomic, strong) CMMotionManager *motionManager;
-@property (nonatomic, strong) UIPushBehavior *pushBehavior;
 
 @end
