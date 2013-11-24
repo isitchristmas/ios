@@ -54,6 +54,7 @@ static const int _kDynamicItemPadding = 50;
         
         //create the label
         IICDynamicLabel *dynamicLabel = [[IICDynamicLabel alloc] initText:[self randomAnswer]];
+        [dynamicLabel setTag:index];
         [self.dynamicViews addObject:dynamicLabel];
         
         //add the view with a semi-random starting point
@@ -72,6 +73,32 @@ static const int _kDynamicItemPadding = 50;
     [self.collisionBehavior setTranslatesReferenceBoundsIntoBoundary:YES];
 }
 
+//updates all of the dynamic views with a random answer
+- (void)updateAnswers {
+    
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         
+                         //update the label text and size
+                         for (IICDynamicLabel *label in self.dynamicViews) {
+                             [label setText:[self randomAnswer]];
+                             [label sizeToFit];
+                         }
+                         
+                     }
+                     completion:^(BOOL finished){
+                         
+                         //update behaviors so that the don't overlap
+                         [self removeBehaviors];
+                         [self addBehaviors];
+                         
+                     }];
+
+}
+
+//returns a yes/no answer for a random language
 - (NSString *)randomAnswer {
     
     //grab the main controller
@@ -140,20 +167,28 @@ static const int _kDynamicItemPadding = 50;
                          if (opacity > 0.0f) {
                              
                              //add behaviors
-                             [self.animator addBehavior:self.gravityBehavior];
-                             [self.animator addBehavior:self.collisionBehavior];
-                             [self.animator addBehavior:self.pushBehavior];
+                             [self addBehaviors];
                              
                          } else {
 
                              //remove behaviors
-                             [self.animator removeBehavior:self.gravityBehavior];
-                             [self.animator removeBehavior:self.collisionBehavior];
-                             [self.animator removeBehavior:self.pushBehavior];
+                             [self removeBehaviors];
                              
                          }
                          
                      }];
+}
+
+- (void)addBehaviors {
+    [self.animator addBehavior:self.gravityBehavior];
+    [self.animator addBehavior:self.collisionBehavior];
+    [self.animator addBehavior:self.pushBehavior];
+}
+
+- (void)removeBehaviors {
+    [self.animator removeBehavior:self.gravityBehavior];
+    [self.animator removeBehavior:self.collisionBehavior];
+    [self.animator removeBehavior:self.pushBehavior];
 }
 
 #pragma mark - core motion

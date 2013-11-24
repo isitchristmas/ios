@@ -105,10 +105,19 @@ static const int _kPadding = 10;
     
 }
 
-//this just sets the label test by calling isItChristmas
+//this sets the label text by calling isItChristmas
+//it also updates the dynamic view answers if it exists
 //this is in its own method so we can call in a timer every five seconds
 - (void)setResultLabel {
+    
+    //main label
 	[self.resultLabel setText:[[self isItChristmas] uppercaseString]];
+    
+    //dynamic labels
+    if (self.dynamicViewController) {
+        [self.dynamicViewController updateAnswers];
+    }
+    
 }
 
 //allow all orientations

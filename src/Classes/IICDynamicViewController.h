@@ -19,4 +19,6 @@
 @property (nonatomic, strong) NSMutableArray *dynamicViews;
 @property (nonatomic) float gravityAmount;
 
+- (void)updateAnswers;
+
 @end
