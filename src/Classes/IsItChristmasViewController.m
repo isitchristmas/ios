@@ -7,7 +7,6 @@
 //
 
 #import "IsItChristmasViewController.h"
-#import "IICDynamicViewController.h"
 
 @implementation IsItChristmasViewController
 static const int _kPadding = 10;
@@ -40,9 +39,9 @@ static const int _kPadding = 10;
     //check to see if UIDynamics is available (iOS 7+)
     //if available, add the dynamic view controller as a child controller
     if (NSClassFromString(@"UIDynamicAnimator")) {
-        IICDynamicViewController *dynamicController = [[IICDynamicViewController alloc] init];
-        [self addChildViewController:dynamicController];
-        [self.view addSubview:dynamicController.view];
+        [self setDynamicViewController:[[IICDynamicViewController alloc] init]];
+        [self addChildViewController:self.dynamicViewController];
+        [self.view addSubview:self.dynamicViewController.view];
     }
 
 }
@@ -120,9 +119,13 @@ static const int _kPadding = 10;
 //allow all orientations iOS 6+
 - (NSUInteger)supportedInterfaceOrientations {
     
-    //don't allow landscape rotation for now while testing uidynamics
-    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-//    return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortraitUpsideDown);
+    //if the dynamic controller exists, allow it to set the interface orientations
+    if (self.dynamicViewController) {
+        return [self.dynamicViewController supportedInterfaceOrientations];
+    }
+    
+    //allow any orientation
+    return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortraitUpsideDown);
     
 }
 

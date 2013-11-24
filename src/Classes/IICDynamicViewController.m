@@ -18,6 +18,13 @@ static const float _kGravityAmount = 2.0f;
 static const int _kMaxDynamicItems = 5;
 static const int _kDynamicItemPadding = 50;
 
+- (void)loadView {
+    [super loadView];
+    
+    //start hidden
+    [self.view setAlpha:0.0f];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -33,9 +40,6 @@ static const int _kDynamicItemPadding = 50;
 }
 
 - (void)setupDynamics {
-    
-    //start hidden
-    [self.view setAlpha:0.0f];
     
     //setup the animator
     [self setAnimator:[[UIDynamicAnimator alloc] initWithReferenceView:self.view]];
@@ -79,6 +83,19 @@ static const int _kDynamicItemPadding = 50;
 }
 
 #pragma mark - rotation
+
+- (NSUInteger)supportedInterfaceOrientations {
+    
+    //if the interface is not currently upside down, allow any rotations
+    if (self.view.alpha == 0.0f || self.interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown) {
+        return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortraitUpsideDown);
+    }
+
+    //orientation is currently upside down
+    //don't allow landscape
+    return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown);
+    
+}
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     

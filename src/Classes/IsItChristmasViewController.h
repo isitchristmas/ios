@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IICDynamicViewController.h"
 
 @interface IsItChristmasViewController : UIViewController
 
@@ -20,5 +21,6 @@
 @property (nonatomic, strong) NSString *selectedLanguage;
 @property (nonatomic, strong) NSString *selectedCountry;
 @property (nonatomic, strong) UILabel *resultLabel;
+@property (nonatomic, strong) IICDynamicViewController *dynamicViewController;
 
 @end
