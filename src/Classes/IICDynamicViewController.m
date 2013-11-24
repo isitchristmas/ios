@@ -93,6 +93,9 @@ static const int _kDynamicItemPadding = 50;
                          [self removeBehaviors];
                          [self addBehaviors];
                          
+                         //fix any out of control views
+                         [self fixRogueViews];
+                         
                      }];
 
 }
@@ -109,6 +112,18 @@ static const int _kDynamicItemPadding = 50;
     NSString *answer = [mainController isItChristmas:language];
     return answer;
     
+}
+
+//check to see if any of the dynamic views got pushed out of the main view
+//if so, reset it
+- (void)fixRogueViews {
+    for (UIView *view in self.dynamicViews) {
+        if (!CGRectContainsPoint(self.view.frame, view.center)) {
+            [self removeBehaviors];
+            [view setCenter:self.view.center];
+            [self addBehaviors];
+        }
+    }
 }
 
 #pragma mark - rotation
@@ -174,6 +189,9 @@ static const int _kDynamicItemPadding = 50;
                              [self removeBehaviors];
                              
                          }
+                         
+                         //fix any views that got pushed off the screen
+                         [self fixRogueViews];
                          
                      }];
 }
