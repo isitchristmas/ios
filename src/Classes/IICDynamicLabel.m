@@ -15,6 +15,7 @@
     if (self) {
         
         //setup the label with some defaults, set the text, and auto resize
+        [self setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin];
         [self setFont:[IICDynamicLabel font]];
         [self setTextColor:[IICDynamicLabel textColor]];
         [self setBackgroundColor:[IICDynamicLabel backgroundColor]];

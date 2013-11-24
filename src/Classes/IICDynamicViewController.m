@@ -56,9 +56,8 @@ static const int _kDynamicItemPadding = 50;
         IICDynamicLabel *dynamicLabel = [[IICDynamicLabel alloc] initText:[self randomAnswer]];
         [self.dynamicViews addObject:dynamicLabel];
         
-        //add the view with a semi-random starting point
-        float randomX = (arc4random() % ((int)self.view.frame.size.width - _kDynamicItemPadding)) + _kDynamicItemPadding;
-        [dynamicLabel setCenter:CGPointMake(randomX, _kDynamicItemPadding)];
+        //add the views to the center of the view
+        [dynamicLabel setCenter:self.view.center];
         [self.view addSubview:dynamicLabel];
         
     }
