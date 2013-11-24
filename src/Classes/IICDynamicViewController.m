@@ -60,7 +60,7 @@ static const int _kDynamicItemPadding = 50;
         //add the view with a semi-random starting point
         float randomX = (arc4random() % ((int)self.view.frame.size.width - _kDynamicItemPadding)) + _kDynamicItemPadding;
         [dynamicLabel setCenter:CGPointMake(randomX, _kDynamicItemPadding)];
-        [self.view insertSubview:dynamicLabel atIndex:0];
+        [self.view addSubview:dynamicLabel];
         
     }
     
