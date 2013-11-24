@@ -54,7 +54,6 @@ static const int _kDynamicItemPadding = 50;
         
         //create the label
         IICDynamicLabel *dynamicLabel = [[IICDynamicLabel alloc] initText:[self randomAnswer]];
-        [dynamicLabel setTag:index];
         [self.dynamicViews addObject:dynamicLabel];
         
         //add the view with a semi-random starting point
