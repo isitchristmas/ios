@@ -44,21 +44,16 @@ static const int _kDynamicItemPadding = 50;
     //setup the animator
     [self setAnimator:[[UIDynamicAnimator alloc] initWithReferenceView:self.view]];
     
-    //grab the main controller
-    IsItChristmasViewController *mainController = (IsItChristmasViewController *)self.parentViewController;
-    
     //setup array if needed
     if (!self.dynamicViews) {
         [self setDynamicViews:[[NSMutableArray alloc] initWithCapacity:_kMaxDynamicItems]];
     }
     
-    //create a dynamic view for each language
-    int index = 1;
-    int count = (mainController.languages.count > _kMaxDynamicItems) ? _kMaxDynamicItems : mainController.languages.count;
-    for (NSString *language in mainController.languages) {
+    //create dynamic items
+    for (int index = 1; index <= _kMaxDynamicItems; index++) {
         
         //create the label
-        IICDynamicLabel *dynamicLabel = [[IICDynamicLabel alloc] initText:[mainController isItChristmas:language]];
+        IICDynamicLabel *dynamicLabel = [[IICDynamicLabel alloc] initText:[self randomAnswer]];
         [self.dynamicViews addObject:dynamicLabel];
         
         //add the view with a semi-random starting point
@@ -66,10 +61,6 @@ static const int _kDynamicItemPadding = 50;
         [dynamicLabel setCenter:CGPointMake(randomX, _kDynamicItemPadding)];
         [self.view insertSubview:dynamicLabel atIndex:0];
         
-        //limit the total number of views for now
-        if (++index > count) {
-            break;
-        }
     }
     
     //gravity
@@ -79,6 +70,19 @@ static const int _kDynamicItemPadding = 50;
     [self setCollisionBehavior:[[UICollisionBehavior alloc] initWithItems:self.dynamicViews]];
     [self.collisionBehavior setCollisionDelegate:self];
     [self.collisionBehavior setTranslatesReferenceBoundsIntoBoundary:YES];
+}
+
+- (NSString *)randomAnswer {
+    
+    //grab the main controller
+    IsItChristmasViewController *mainController = (IsItChristmasViewController *)self.parentViewController;
+    
+    //return a random answer
+    int randomIndex = arc4random() % mainController.languages.count;
+    NSString *language = [mainController.languages objectAtIndex:randomIndex];
+    NSString *answer = [mainController isItChristmas:language];
+    return answer;
+    
 }
 
 #pragma mark - rotation
