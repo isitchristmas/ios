@@ -17,7 +17,8 @@
 @property (nonatomic, strong) UICollisionBehavior *collisionBehavior;
 @property (nonatomic, strong) UIPushBehavior *pushBehavior;
 @property (nonatomic, strong) NSMutableArray *dynamicViews;
-@property (nonatomic) float gravityAmount;
+@property (nonatomic) float gravityX;
+@property (nonatomic) float gravityY;
 
 - (void)updateAnswers;
 

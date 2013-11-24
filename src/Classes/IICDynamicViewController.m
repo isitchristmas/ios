@@ -139,24 +139,43 @@ static const int _kDynamicItemPadding = 50;
     return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown);
     
 }
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    
-    //update gravity and opacity based in the new orientation
-    float opacity = 0.0f;
-    switch (toInterfaceOrientation) {
+//update gravity based in the new orientation
+- (void)setGravityForOrientation:(UIInterfaceOrientation)orientation {
+    switch (orientation) {
             
+        case UIInterfaceOrientationLandscapeLeft:
+            [self setGravityX:_kGravityAmount];
+            [self setGravityY:_kGravityAmount];
+            break;
+            
+        case UIInterfaceOrientationLandscapeRight:
+            [self setGravityX:-_kGravityAmount];
+            [self setGravityY:-_kGravityAmount];
+            break;
+        
         case UIInterfaceOrientationPortraitUpsideDown:
-            [self setGravityAmount:-_kGravityAmount];
-            opacity = 1.0f;
+            [self setGravityX:-_kGravityAmount];
+            [self setGravityY:_kGravityAmount];
             break;
             
         case UIInterfaceOrientationPortrait:
         default:
-            [self setGravityAmount:_kGravityAmount];
+            [self setGravityX:_kGravityAmount];
+            [self setGravityY:-_kGravityAmount];
             break;
             
     }
+}
+
+#pragma mark - rotation
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    
+    //hide the views when in portrait mode
+    float opacity = (toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown) ? 0.0f : 1.0f;
+    
+    //update the gravity
+    [self setGravityForOrientation:toInterfaceOrientation];
     
     //setup dynamic items if needed
     if (opacity > 0.0f && !self.animator) {
@@ -217,11 +236,18 @@ static const int _kDynamicItemPadding = 50;
 
 //updates the UIGravityBehavior based on the accelerometer
 - (void)startMotionDetection {
-    [self setGravityAmount:_kGravityAmount];
     [self.motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMAccelerometerData *data, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            CGVector gravityDirection = { data.acceleration.x * self.gravityAmount, -data.acceleration.y * self.gravityAmount };
+            
+            //reverse the acceleration when in landscape more
+            BOOL isLandscape = UIInterfaceOrientationIsLandscape(self.interfaceOrientation);
+            float accelerationX = (isLandscape) ? data.acceleration.y : data.acceleration.x;
+            float accelerationY = (isLandscape) ? data.acceleration.x : data.acceleration.y;
+            
+            //set the gravity direction
+            CGVector gravityDirection = { accelerationX * self.gravityX, accelerationY * self.gravityY };
             [self.gravityBehavior setGravityDirection:gravityDirection];
+            
         });
     }];
 }
