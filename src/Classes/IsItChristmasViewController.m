@@ -100,6 +100,7 @@ static const int _kPadding = 10;
 	
 	//set the result label for the first time
 	//then every 5 seconds check to see if it is christmas
+    //we could set a timer for December 25th at midnight, but isn't it more fun to keep asking?
 	[self setResultLabel];
 	[NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(setResultLabel) userInfo:nil repeats:YES];
     
