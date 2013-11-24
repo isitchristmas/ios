@@ -53,7 +53,7 @@ static const int _kDynamicItemPadding = 50;
     }
     
     //create a dynamic view for each language
-    int test = 1;
+    int index = 1;
     int count = (mainController.languages.count > _kMaxDynamicItems) ? _kMaxDynamicItems : mainController.languages.count;
     for (NSString *language in mainController.languages) {
         
@@ -65,10 +65,9 @@ static const int _kDynamicItemPadding = 50;
         float randomX = (arc4random() % ((int)self.view.frame.size.width - _kDynamicItemPadding)) + _kDynamicItemPadding;
         [dynamicLabel setCenter:CGPointMake(randomX, _kDynamicItemPadding)];
         [self.view insertSubview:dynamicLabel atIndex:0];
-        NSLog(@"randomX: %f", randomX);
         
         //limit the total number of views for now
-        if (++test > count) {
+        if (++index > count) {
             break;
         }
     }
