@@ -14,18 +14,9 @@
 @implementation IICDynamicViewController
 
 static const float _kDampenAmount = 0.2f;
-static const float _kGravity = 2.0f;
+static const float _kGravityAmount = 2.0f;
 static const int _kMaxDynamicItems = 5;
 static const int _kDynamicItemPadding = 50;
-
-//additional setup after loading the view
-- (void)viewDidLoad {
-	
-	[super viewDidLoad];
-    
-    //setup dynamic views
-    [self setupDynamics];
-}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -43,20 +34,28 @@ static const int _kDynamicItemPadding = 50;
 
 - (void)setupDynamics {
     
+    //start hidden
+    [self.view setAlpha:0.0f];
+    
     //setup the animator
     [self setAnimator:[[UIDynamicAnimator alloc] initWithReferenceView:self.view]];
     
     //grab the main controller
     IsItChristmasViewController *mainController = (IsItChristmasViewController *)self.parentViewController;
     
+    //setup array if needed
+    if (!self.dynamicViews) {
+        [self setDynamicViews:[[NSMutableArray alloc] initWithCapacity:_kMaxDynamicItems]];
+    }
+    
     //create a dynamic view for each language
-    NSMutableArray *dynamicViews = [[NSMutableArray alloc] initWithCapacity:mainController.languages.count];
     int test = 1;
+    int count = (mainController.languages.count > _kMaxDynamicItems) ? _kMaxDynamicItems : mainController.languages.count;
     for (NSString *language in mainController.languages) {
         
         //create the label
         IICDynamicLabel *dynamicLabel = [[IICDynamicLabel alloc] initText:[mainController isItChristmas:language]];
-        [dynamicViews addObject:dynamicLabel];
+        [self.dynamicViews addObject:dynamicLabel];
         
         //add the view with a semi-random starting point
         float randomX = (arc4random() % ((int)self.view.frame.size.width - _kDynamicItemPadding)) + _kDynamicItemPadding;
@@ -65,20 +64,76 @@ static const int _kDynamicItemPadding = 50;
         NSLog(@"randomX: %f", randomX);
         
         //limit the total number of views for now
-        if (++test > _kMaxDynamicItems) {
+        if (++test > count) {
             break;
         }
     }
     
     //gravity
-    [self setGravity:[[UIGravityBehavior alloc] initWithItems:dynamicViews]];
-    [self.animator addBehavior:self.gravity];
+    [self setGravityBehavior:[[UIGravityBehavior alloc] initWithItems:self.dynamicViews]];
     
     //collisions
-    UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:dynamicViews];
-    [collision setCollisionDelegate:self];
-    [collision setTranslatesReferenceBoundsIntoBoundary:YES];
-    [self.animator addBehavior:collision];
+    [self setCollisionBehavior:[[UICollisionBehavior alloc] initWithItems:self.dynamicViews]];
+    [self.collisionBehavior setCollisionDelegate:self];
+    [self.collisionBehavior setTranslatesReferenceBoundsIntoBoundary:YES];
+}
+
+#pragma mark - rotation
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    
+    //update gravity and opacity based in the new orientation
+    float opacity = 0.0f;
+    switch (toInterfaceOrientation) {
+            
+        case UIInterfaceOrientationPortraitUpsideDown:
+            [self setGravityAmount:-_kGravityAmount];
+            opacity = 1.0f;
+            break;
+            
+        case UIInterfaceOrientationPortrait:
+        default:
+            [self setGravityAmount:_kGravityAmount];
+            break;
+            
+    }
+    
+    //setup dynamic items if needed
+    if (opacity > 0.0f && !self.animator) {
+        [self setupDynamics];
+    }
+    
+    //animate the view opacity
+    //remove the behaviors if needed
+    [UIView animateWithDuration:duration
+                          delay:duration
+                        options: UIViewAnimationCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         
+                         //animate the opacity
+                         [self.view setAlpha:opacity];
+                         
+                     }
+                     completion:^(BOOL finished){
+                         
+                         //add or remote remove behaviors after animating the opacity
+                         if (opacity > 0.0f) {
+                             
+                             //add behaviors
+                             [self.animator addBehavior:self.gravityBehavior];
+                             [self.animator addBehavior:self.collisionBehavior];
+                             [self.animator addBehavior:self.pushBehavior];
+                             
+                         } else {
+
+                             //remove behaviors
+                             [self.animator removeBehavior:self.gravityBehavior];
+                             [self.animator removeBehavior:self.collisionBehavior];
+                             [self.animator removeBehavior:self.pushBehavior];
+                             
+                         }
+                         
+                     }];
 }
 
 #pragma mark - core motion
@@ -91,10 +146,11 @@ static const int _kDynamicItemPadding = 50;
 
 //updates the UIGravityBehavior based on the accelerometer
 - (void)startMotionDetection {
+    [self setGravityAmount:_kGravityAmount];
     [self.motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMAccelerometerData *data, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            CGVector gravityDirection = { data.acceleration.x * _kGravity, -data.acceleration.y * _kGravity };
-            [self.gravity setGravityDirection:gravityDirection];
+            CGVector gravityDirection = { data.acceleration.x * self.gravityAmount, -data.acceleration.y * self.gravityAmount };
+            [self.gravityBehavior setGravityDirection:gravityDirection];
         });
     }];
 }
@@ -128,7 +184,7 @@ static const int _kDynamicItemPadding = 50;
     if (!self.pushBehavior) {
         [self setPushBehavior:[[UIPushBehavior alloc] initWithItems:nil mode:UIPushBehaviorModeInstantaneous]];
     }
-    [self.pushBehavior setPushDirection:CGVectorMake(-self.gravity.gravityDirection.dx * _kDampenAmount, -self.gravity.gravityDirection.dy * _kDampenAmount)];
+    [self.pushBehavior setPushDirection:CGVectorMake(-self.gravityBehavior.gravityDirection.dx * _kDampenAmount, -self.gravityBehavior.gravityDirection.dy * _kDampenAmount)];
     [self.pushBehavior addItem:item];
     [self.pushBehavior setActive:YES];
     [self.animator addBehavior:self.pushBehavior];

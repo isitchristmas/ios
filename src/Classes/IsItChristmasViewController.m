@@ -119,9 +119,11 @@ static const int _kPadding = 10;
 
 //allow all orientations iOS 6+
 - (NSUInteger)supportedInterfaceOrientations {
-    //don't allow rotation for now while testing uidynamics
-    return UIInterfaceOrientationMaskPortrait;
+    
+    //don't allow landscape rotation for now while testing uidynamics
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
 //    return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortraitUpsideDown);
+    
 }
 
 @end
