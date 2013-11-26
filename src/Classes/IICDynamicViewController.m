@@ -67,6 +67,7 @@ static const int _kDynamicItemPadding = 50;
     
     //collisions
     [self setCollisionBehavior:[[UICollisionBehavior alloc] initWithItems:self.dynamicViews]];
+    [self.collisionBehavior setTranslatesReferenceBoundsIntoBoundary:YES];
     
 }
 
@@ -219,15 +220,9 @@ static const int _kDynamicItemPadding = 50;
     [self.animator addBehavior:self.gravityBehavior];
     [self.animator addBehavior:self.collisionBehavior];
     
-    //collisions
-    [self.collisionBehavior setTranslatesReferenceBoundsIntoBoundary:YES];
-    
 }
 
 - (void)removeBehaviors {
-    
-    //collisions
-    [self.collisionBehavior setTranslatesReferenceBoundsIntoBoundary:NO];
     
     //remove behaviors
     [self.animator removeBehavior:self.gravityBehavior];
