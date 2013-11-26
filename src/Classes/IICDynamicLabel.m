@@ -19,7 +19,6 @@
         [self setFont:[IICDynamicLabel font]];
         [self setTextColor:[IICDynamicLabel textColor]];
         [self setBackgroundColor:[IICDynamicLabel backgroundColor]];
-        [self setAdjustsFontSizeToFitWidth:YES];
         [self setText:text];
         [self sizeToFit];
         
