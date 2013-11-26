@@ -9,13 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
 
-@interface IICDynamicViewController : UIViewController <UICollisionBehaviorDelegate>
+@interface IICDynamicViewController : UIViewController
 
 @property (nonatomic, strong) CMMotionManager *motionManager;
 @property (nonatomic, strong) UIDynamicAnimator *animator;
 @property (nonatomic, strong) UIGravityBehavior *gravityBehavior;
 @property (nonatomic, strong) UICollisionBehavior *collisionBehavior;
-@property (nonatomic, strong) UIPushBehavior *pushBehavior;
 @property (nonatomic, strong) NSMutableArray *dynamicViews;
 @property (nonatomic) float gravityX;
 @property (nonatomic) float gravityY;

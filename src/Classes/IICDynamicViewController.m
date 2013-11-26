@@ -218,10 +218,8 @@ static const int _kDynamicItemPadding = 50;
     //add behaviors
     [self.animator addBehavior:self.gravityBehavior];
     [self.animator addBehavior:self.collisionBehavior];
-    [self.animator addBehavior:self.pushBehavior];
     
     //collisions
-    [self.collisionBehavior setCollisionDelegate:self];
     [self.collisionBehavior setTranslatesReferenceBoundsIntoBoundary:YES];
     
 }
@@ -229,13 +227,11 @@ static const int _kDynamicItemPadding = 50;
 - (void)removeBehaviors {
     
     //collisions
-    [self.collisionBehavior setCollisionDelegate:nil];
     [self.collisionBehavior setTranslatesReferenceBoundsIntoBoundary:NO];
     
     //remove behaviors
     [self.animator removeBehavior:self.gravityBehavior];
     [self.animator removeBehavior:self.collisionBehavior];
-    [self.animator removeBehavior:self.pushBehavior];
     
 }
 
@@ -263,41 +259,6 @@ static const int _kDynamicItemPadding = 50;
             
         });
     }];
-}
-
-#pragma mark - UICollisionBehaviorDelegate
-
-//bounce items off of each other
-- (void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item1 withItem:(id<UIDynamicItem>)item2 atPoint:(CGPoint)p {
-    [self pushItem:item1];
-}
-
-//bounce items off of the wall
-- (void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p {
-    [self pushItem:item];
-}
-
-//item collision ended, remove the bounce effect
-- (void)collisionBehavior:(UICollisionBehavior *)behavior endedContactForItem:(id<UIDynamicItem>)item1 withItem:(id<UIDynamicItem>)item2 {
-    [self.pushBehavior removeItem:item1];
-}
-
-//wall collision ended, remove the bounce effect
-- (void)collisionBehavior:(UICollisionBehavior *)behavior endedContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier {
-    [self.pushBehavior removeItem:item];
-}
-
-//push an item the opposite direction of gravity to simulate a bounce effect
-- (void)pushItem:(id<UIDynamicItem>)item {
-    
-    //setup the push behavior if needed
-    if (!self.pushBehavior) {
-        [self setPushBehavior:[[UIPushBehavior alloc] initWithItems:nil mode:UIPushBehaviorModeInstantaneous]];
-    }
-    [self.pushBehavior setPushDirection:CGVectorMake(-self.gravityBehavior.gravityDirection.dx * _kDampenAmount, -self.gravityBehavior.gravityDirection.dy * _kDampenAmount)];
-    [self.pushBehavior addItem:item];
-    [self.pushBehavior setActive:YES];
-    [self.animator addBehavior:self.pushBehavior];
 }
 
 @end
