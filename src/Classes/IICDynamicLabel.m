@@ -28,7 +28,11 @@
 
 + (UIFont *)font {
     static UIFont *font = nil;
-    if (!font) font = [UIFont fontWithName:@"ArialMT" size:30.0f];
+    if (!font) {
+        //adjust font size based on the device
+        float fontSize = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 40.0f : 30.0f;
+        font = [UIFont fontWithName:@"ArialMT" size:fontSize];
+    }
     return font;
 }
 
