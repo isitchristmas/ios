@@ -18,6 +18,7 @@ static const float _kElasticityMin = 0.009f;  //must be greater than zero
 static const float _kElasticityMax = 1.0f;
 static const float _kGravityAmount = 2.0f;
 static const int _kMaxDynamicItems = 5;
+static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 
 - (void)loadView {
     [super loadView];
@@ -27,6 +28,13 @@ static const int _kMaxDynamicItems = 5;
 }
 
 - (void)setupDynamics {
+    
+    //setup the elasticity label if needed
+    if (!self.elasticityLabel) {
+        [self setElasticityLabel:[[IICNotificationLabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width * 0.5f, self.view.frame.size.height * 0.5f) text:[NSString stringWithFormat:_kElasticityFormat, 100]]];
+        [self.elasticityLabel setCenter:CGPointMake(self.view.center.x, self.view.center.y - (self.view.center.y * 0.5f))];
+        [self.view addSubview:self.elasticityLabel];
+    }
     
     //setup the animator
     [self setAnimator:[[UIDynamicAnimator alloc] initWithReferenceView:self.view]];
@@ -45,7 +53,7 @@ static const int _kMaxDynamicItems = 5;
         
         //add the views to the center of the view
         [dynamicLabel setCenter:self.view.center];
-        [self.view addSubview:dynamicLabel];
+        [self.view insertSubview:dynamicLabel belowSubview:self.elasticityLabel];
         
     }
     
@@ -142,8 +150,9 @@ static const int _kMaxDynamicItems = 5;
     }
     
     //update the elasticity
+    //update the label
     [self.itemBehavior setElasticity:newElasticity];
-    NSLog(@"new elasticity: %i%%", (int)(newElasticity * 100));
+    [self.elasticityLabel setText:[NSString stringWithFormat:_kElasticityFormat, (int)(newElasticity * 100)]];
     
 }
 
