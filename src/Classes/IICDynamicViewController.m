@@ -96,10 +96,6 @@ static const int _kDynamicItemPadding = 50;
                      }
                      completion:^(BOOL finished){
                          
-                         //update behaviors so that the don't overlap
-                         [self removeBehaviors];
-                         [self addBehaviors];
-                         
                          //fix any out of control views
                          [self fixRogueViews];
                          
@@ -126,9 +122,7 @@ static const int _kDynamicItemPadding = 50;
 - (void)fixRogueViews {
     for (UIView *view in self.dynamicViews) {
         if (!CGRectContainsPoint(self.view.frame, view.center)) {
-            [self removeBehaviors];
             [view setCenter:self.view.center];
-            [self addBehaviors];
         }
     }
 }
@@ -191,6 +185,11 @@ static const int _kDynamicItemPadding = 50;
         [self setupDynamics];
     }
     
+    //if the view will be visible after the animation, add the behaviors now
+    if (opacity > 0.0f) {
+        [self addBehaviors];
+    }
+    
     //animate the view opacity
     //remove the behaviors if needed
     [UIView animateWithDuration:duration
@@ -204,10 +203,8 @@ static const int _kDynamicItemPadding = 50;
                      }
                      completion:^(BOOL finished){
                          
-                         //add or remove behaviors after animating the opacity
-                         if (opacity > 0.0f) {
-                             [self addBehaviors];
-                         } else {
+                         //remove behaviors after setting the opacity to zero
+                         if (opacity <= 0.0f) {
                              [self removeBehaviors];
                          }
                          
