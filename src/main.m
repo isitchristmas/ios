@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "IsItChristmasAppDelegate.h"
+#import "IICAppDelegate.h"
 
 int main(int argc, char *argv[]) {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([IsItChristmasAppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([IICAppDelegate class]));
     }
 }

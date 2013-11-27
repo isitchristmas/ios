@@ -1,5 +1,5 @@
 //
-//  IsItChristmasViewController.h
+//  IICMainViewController.h
 //  IsItChristmas
 //
 //  Created by Brandon Jones on 11/21/09.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "IICDynamicViewController.h"
 
-@interface IsItChristmasViewController : UIViewController
+@interface IICMainViewController : UIViewController
 
 - (void)setResultLabel;
 - (NSString *)isItChristmas;

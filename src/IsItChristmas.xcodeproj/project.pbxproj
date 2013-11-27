@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1CA7689B10B89C7C0050EAFA /* IsItChristmasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA7689A10B89C7C0050EAFA /* IsItChristmasViewController.m */; };
-		1D3623260D0F684500981E51 /* IsItChristmasAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* IsItChristmasAppDelegate.m */; };
+		1CA7689B10B89C7C0050EAFA /* IICMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA7689A10B89C7C0050EAFA /* IICMainViewController.m */; };
+		1D3623260D0F684500981E51 /* IICAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* IICAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -21,11 +21,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1CA7689910B89C7C0050EAFA /* IsItChristmasViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsItChristmasViewController.h; sourceTree = "<group>"; };
-		1CA7689A10B89C7C0050EAFA /* IsItChristmasViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IsItChristmasViewController.m; sourceTree = "<group>"; };
+		1CA7689910B89C7C0050EAFA /* IICMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IICMainViewController.h; sourceTree = "<group>"; };
+		1CA7689A10B89C7C0050EAFA /* IICMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IICMainViewController.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D3623240D0F684500981E51 /* IsItChristmasAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsItChristmasAppDelegate.h; sourceTree = "<group>"; };
-		1D3623250D0F684500981E51 /* IsItChristmasAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IsItChristmasAppDelegate.m; sourceTree = "<group>"; };
+		1D3623240D0F684500981E51 /* IICAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IICAppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* IICAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IICAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* IsItChristmas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IsItChristmas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -59,14 +59,14 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				1D3623240D0F684500981E51 /* IICAppDelegate.h */,
+				1D3623250D0F684500981E51 /* IICAppDelegate.m */,
 				4701DC251841050C009DDE6A /* IICDynamicLabel.h */,
 				4701DC261841050C009DDE6A /* IICDynamicLabel.m */,
 				4701DC2818413F48009DDE6A /* IICDynamicViewController.h */,
 				4701DC2918413F48009DDE6A /* IICDynamicViewController.m */,
-				1D3623240D0F684500981E51 /* IsItChristmasAppDelegate.h */,
-				1D3623250D0F684500981E51 /* IsItChristmasAppDelegate.m */,
-				1CA7689910B89C7C0050EAFA /* IsItChristmasViewController.h */,
-				1CA7689A10B89C7C0050EAFA /* IsItChristmasViewController.m */,
+				1CA7689910B89C7C0050EAFA /* IICMainViewController.h */,
+				1CA7689A10B89C7C0050EAFA /* IICMainViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -191,9 +191,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				1D3623260D0F684500981E51 /* IsItChristmasAppDelegate.m in Sources */,
+				1D3623260D0F684500981E51 /* IICAppDelegate.m in Sources */,
 				4701DC271841050C009DDE6A /* IICDynamicLabel.m in Sources */,
-				1CA7689B10B89C7C0050EAFA /* IsItChristmasViewController.m in Sources */,
+				1CA7689B10B89C7C0050EAFA /* IICMainViewController.m in Sources */,
 				4701DC2A18413F48009DDE6A /* IICDynamicViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

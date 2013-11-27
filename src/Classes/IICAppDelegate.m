@@ -1,14 +1,14 @@
 //
-//  IsItChristmasAppDelegate.m
+//  IICAppDelegate.m
 //  IsItChristmas
 //
 //  Created by Brandon Jones on 11/21/09.
 //  Copyright Brandon Jones 2009. All rights reserved.
 //
 
-#import "IsItChristmasAppDelegate.h"
+#import "IICAppDelegate.h"
 
-@implementation IsItChristmasAppDelegate
+@implementation IICAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
@@ -17,7 +17,7 @@
     [self.window makeKeyAndVisible];
     
     //setup the main view controller
-	[self setIicController:[[IsItChristmasViewController alloc] init]];
+	[self setIicController:[[IICMainViewController alloc] init]];
     [self.window setRootViewController:self.iicController];
 	
 	//make sure defaults are set

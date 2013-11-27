@@ -1,5 +1,5 @@
 //
-//  IsItChristmasAppDelegate.h
+//  IICAppDelegate.h
 //  IsItChristmas
 //
 //  Created by Brandon Jones on 11/21/09.
@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
-#import "IsItChristmasViewController.h"
+#import "IICMainViewController.h"
 
-@interface IsItChristmasAppDelegate : NSObject <UIApplicationDelegate>
+@interface IICAppDelegate : NSObject <UIApplicationDelegate>
 
 - (void)setupNotifications;
 - (void)setupDefaults;
 
 @property (nonatomic, strong) UIWindow *window;
-@property (nonatomic, strong) IsItChristmasViewController *iicController;
+@property (nonatomic, strong) IICMainViewController *iicController;
 @property (nonatomic, strong) CMMotionManager *motionManager;
 
 @end

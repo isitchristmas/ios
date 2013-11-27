@@ -8,8 +8,8 @@
 
 #import "IICDynamicViewController.h"
 #import "IICDynamicLabel.h"
-#import "IsItChristmasViewController.h"
-#import "IsItChristmasAppDelegate.h"
+#import "IICMainViewController.h"
+#import "IICAppDelegate.h"
 
 @implementation IICDynamicViewController
 
@@ -103,7 +103,7 @@ static const int _kDynamicItemPadding = 50;
 - (NSString *)randomAnswer {
     
     //grab the main controller
-    IsItChristmasViewController *mainController = (IsItChristmasViewController *)self.parentViewController;
+    IICMainViewController *mainController = (IICMainViewController *)self.parentViewController;
     
     //return a random answer
     int randomIndex = arc4random() % mainController.languages.count;
@@ -234,7 +234,7 @@ static const int _kDynamicItemPadding = 50;
 
 //returns the maain motion manager from the app delegate
 - (CMMotionManager *)motionManager {
-    IsItChristmasAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    IICAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     return appDelegate.motionManager;
 }
 

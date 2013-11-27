@@ -1,14 +1,14 @@
 //
-//  IsItChristmasViewController.m
+//  IICMainViewController.m
 //  IsItChristmas
 //
 //  Created by Brandon Jones on 11/21/09.
 //  Copyright 2009 Brandon Jones. All rights reserved.
 //
 
-#import "IsItChristmasViewController.h"
+#import "IICMainViewController.h"
 
-@implementation IsItChristmasViewController
+@implementation IICMainViewController
 static const int _kPadding = 10;
 
 //load the view
