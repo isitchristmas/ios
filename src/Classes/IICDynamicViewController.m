@@ -69,6 +69,14 @@ static const int _kDynamicItemPadding = 50;
     [self setCollisionBehavior:[[UICollisionBehavior alloc] initWithItems:self.dynamicViews]];
     [self.collisionBehavior setTranslatesReferenceBoundsIntoBoundary:YES];
     
+    //item behavior
+    [self setItemBehavior:[[UIDynamicItemBehavior alloc] initWithItems:self.dynamicViews]];
+    [self.itemBehavior setElasticity:0.8f];
+    [self.itemBehavior setAngularResistance:0.1f];
+    [self.itemBehavior setDensity:500.0f];
+    [self.itemBehavior setFriction:0.0f];
+    [self.itemBehavior setResistance:0.0f];
+    
 }
 
 //updates all of the dynamic views with a random answer
@@ -213,12 +221,14 @@ static const int _kDynamicItemPadding = 50;
 - (void)addBehaviors {
     [self.animator addBehavior:self.gravityBehavior];
     [self.animator addBehavior:self.collisionBehavior];
+    [self.animator addBehavior:self.itemBehavior];
 }
 
 //remove behaviors from the animator
 - (void)removeBehaviors {
     [self.animator removeBehavior:self.gravityBehavior];
     [self.animator removeBehavior:self.collisionBehavior];
+    [self.animator removeBehavior:self.itemBehavior];
 }
 
 #pragma mark - core motion

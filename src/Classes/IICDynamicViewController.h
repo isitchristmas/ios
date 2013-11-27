@@ -15,6 +15,7 @@
 @property (nonatomic, strong) UIDynamicAnimator *animator;
 @property (nonatomic, strong) UIGravityBehavior *gravityBehavior;
 @property (nonatomic, strong) UICollisionBehavior *collisionBehavior;
+@property (nonatomic, strong) UIDynamicItemBehavior *itemBehavior;
 @property (nonatomic, strong) NSMutableArray *dynamicViews;
 @property (nonatomic) float gravityX;
 @property (nonatomic) float gravityY;
