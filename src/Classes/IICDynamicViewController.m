@@ -27,6 +27,14 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     [self.view setAlpha:0.0f];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    
+    //setup the interface for the initial orientation
+    //if the user starts upside down, the dynamic labels will appear
+    [self updateInterfaceForCurrentOrientation];
+    
+}
+
 - (void)setupDynamics {
     
     //setup the elasticity label if needed
@@ -201,13 +209,17 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 
 #pragma mark - rotation
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self updateInterfaceForCurrentOrientation];
+}
+
+- (void)updateInterfaceForCurrentOrientation {
     
     //hide the views when in portrait mode
-    float opacity = (toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown) ? 0.0f : 1.0f;
+    float opacity = (self.interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown) ? 0.0f : 1.0f;
     
     //update the gravity
-    [self setGravityForOrientation:toInterfaceOrientation];
+    [self setGravityForOrientation:self.interfaceOrientation];
     
     //setup dynamic items if needed
     if (opacity > 0.0f && !self.animator) {
@@ -224,8 +236,8 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     
     //animate the view opacity
     //remove the behaviors if needed
-    [UIView animateWithDuration:duration
-                          delay:duration
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
                         options: UIViewAnimationCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          
