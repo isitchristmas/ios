@@ -139,6 +139,7 @@ static const int _kDynamicItemPadding = 50;
     return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown);
     
 }
+
 //update gravity based in the new orientation
 - (void)setGravityForOrientation:(UIInterfaceOrientation)orientation {
     switch (orientation) {
@@ -195,17 +196,11 @@ static const int _kDynamicItemPadding = 50;
                      }
                      completion:^(BOOL finished){
                          
-                         //add or remote remove behaviors after animating the opacity
+                         //add or remove behaviors after animating the opacity
                          if (opacity > 0.0f) {
-                             
-                             //add behaviors
                              [self addBehaviors];
-                             
                          } else {
-
-                             //remove behaviors
                              [self removeBehaviors];
-                             
                          }
                          
                          //fix any views that got pushed off the screen
@@ -214,20 +209,16 @@ static const int _kDynamicItemPadding = 50;
                      }];
 }
 
+//add behaviors to the animator
 - (void)addBehaviors {
-    
-    //add behaviors
     [self.animator addBehavior:self.gravityBehavior];
     [self.animator addBehavior:self.collisionBehavior];
-    
 }
 
+//remove behaviors from the animator
 - (void)removeBehaviors {
-    
-    //remove behaviors
     [self.animator removeBehavior:self.gravityBehavior];
     [self.animator removeBehavior:self.collisionBehavior];
-    
 }
 
 #pragma mark - core motion

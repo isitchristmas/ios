@@ -27,11 +27,13 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    
 	//setup the local notifications in the background
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	if ([[UIApplication sharedApplication] respondsToSelector:@selector(scheduleLocalNotification:)]) {
 		[self performSelectorInBackground:@selector(setupNotifications) withObject:nil];
 	}
+    
 }
 
 - (void)setupNotifications {
