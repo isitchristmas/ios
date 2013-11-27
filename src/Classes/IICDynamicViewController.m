@@ -13,6 +13,9 @@
 
 @implementation IICDynamicViewController
 
+static const float _kElasticityDefault = 0.8f;
+static const float _kElasticityMin = 0.009f;  //must be greater than zero
+static const float _kElasticityMax = 1.0f;
 static const float _kDampenAmount = 0.2f;
 static const float _kGravityAmount = 2.0f;
 static const int _kMaxDynamicItems = 5;
@@ -71,11 +74,15 @@ static const int _kDynamicItemPadding = 50;
     
     //item behavior
     [self setItemBehavior:[[UIDynamicItemBehavior alloc] initWithItems:self.dynamicViews]];
-    [self.itemBehavior setElasticity:0.8f];
+    [self.itemBehavior setElasticity:_kElasticityDefault];
     [self.itemBehavior setAngularResistance:0.1f];
     [self.itemBehavior setDensity:500.0f];
     [self.itemBehavior setFriction:0.0f];
     [self.itemBehavior setResistance:0.0f];
+    
+    //pinch recognizer for adjusting the elasticity
+    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
+    [self.view addGestureRecognizer:pinchGesture];
     
 }
 
@@ -125,6 +132,35 @@ static const int _kDynamicItemPadding = 50;
             [view setCenter:self.view.center];
         }
     }
+}
+
+#pragma mark - UIPinchGestureRecognizer
+
+//update the dynamic item eleasticity
+-(void)handlePinch:(UIPinchGestureRecognizer *)gesture {
+    
+    //don't grow or shrink too fast
+    float scale = gesture.scale;
+    if (scale > 1.05f) {
+        scale = 1.05f;
+    } else if (scale < 0.95f) {
+        scale = 0.95;
+    }
+    
+    //calculate the new eleasticity
+    float newElasticity = self.itemBehavior.elasticity * scale;
+    
+    //respect the min and max
+    if (newElasticity > _kElasticityMax) {
+        newElasticity = _kElasticityMax;
+    } else if (newElasticity < _kElasticityMin) {
+        newElasticity = _kElasticityMin;
+    }
+    
+    //update the elasticity
+    [self.itemBehavior setElasticity:newElasticity];
+    NSLog(@"new elasticity: %i%%", (int)(newElasticity * 100));
+    
 }
 
 #pragma mark - rotation
