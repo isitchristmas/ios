@@ -11,16 +11,23 @@
 
 @implementation IICNotificationLabel
 
-static const int _kPadding = 20.0f;
+static float _kPadding = 10.0f;
+static float _kFontSize = 25.0f;
 
 - (id)initWithFrame:(CGRect)frame text:(NSString *)initialText
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
+        //adjust the font size and padding for the iPad
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            _kFontSize = 30.0f;
+            _kPadding = 20.0f;
+        }
 
         //setup the label
         [self setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth];
-        [self setFont:[UIFont fontWithName:@"ArialMT" size:30.0]];
+        [self setFont:[UIFont fontWithName:@"ArialMT" size:_kFontSize]];
         [self setAdjustsFontSizeToFitWidth:YES];
         [self setTextAlignment:NSTextAlignmentCenter];
         [self setTextColor:[UIColor colorWithWhite:0.6f alpha:0.5f]];
@@ -28,7 +35,7 @@ static const int _kPadding = 20.0f;
         [self setAlpha:0.0f];
         [self setText:initialText animate:NO];
         [self sizeToFit];
-        [self setFrame:CGRectMake(self.frame.origin.x - (_kPadding * 4) , self.frame.origin.y - _kPadding, self.frame.size.width + (_kPadding * 8), self.frame.size.height + (_kPadding * 2))];
+        [self setFrame:CGRectMake(self.frame.origin.x - (_kPadding * 4) , self.frame.origin.y - _kPadding, self.frame.size.width + (_kPadding * 4), self.frame.size.height + (_kPadding * 2))];
         [self.layer setCornerRadius:roundf(self.frame.size.height / 6)];
         
     }
