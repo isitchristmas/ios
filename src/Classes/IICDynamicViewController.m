@@ -26,20 +26,6 @@ static const int _kMaxDynamicItems = 5;
     [self.view setAlpha:0.0f];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    //start detecting motion
-    [self startMotionDetection];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    
-    //stop detecting motion
-    [self.motionManager stopAccelerometerUpdates];
-}
-
 - (void)setupDynamics {
     
     //setup the animator
@@ -219,9 +205,12 @@ static const int _kMaxDynamicItems = 5;
         [self setupDynamics];
     }
     
-    //if the view will be visible after the animation, add the behaviors now
+    //if the view will be visible after the animation
+    //add the behaviors
+    //start detecting motion
     if (opacity > 0.0f) {
         [self addBehaviors];
+        [self startMotionDetection];
     }
     
     //animate the view opacity
@@ -237,9 +226,12 @@ static const int _kMaxDynamicItems = 5;
                      }
                      completion:^(BOOL finished){
                          
-                         //remove behaviors after setting the opacity to zero
+                         //view will be invisible
+                         //remove behaviors
+                         //stop detecting motion
                          if (opacity <= 0.0f) {
                              [self removeBehaviors];
+                             [self.motionManager stopAccelerometerUpdates];
                          }
                          
                          //fix any views that got pushed off the screen
