@@ -16,10 +16,8 @@
 static const float _kElasticityDefault = 0.8f;
 static const float _kElasticityMin = 0.009f;  //must be greater than zero
 static const float _kElasticityMax = 1.0f;
-static const float _kDampenAmount = 0.2f;
 static const float _kGravityAmount = 2.0f;
 static const int _kMaxDynamicItems = 5;
-static const int _kDynamicItemPadding = 50;
 
 - (void)loadView {
     [super loadView];
