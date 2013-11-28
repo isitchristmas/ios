@@ -134,6 +134,20 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     }
 }
 
+//add behaviors to the animator
+- (void)addBehaviors {
+    [self.animator addBehavior:self.gravityBehavior];
+    [self.animator addBehavior:self.collisionBehavior];
+    [self.animator addBehavior:self.itemBehavior];
+}
+
+//remove behaviors from the animator
+- (void)removeBehaviors {
+    [self.animator removeBehavior:self.gravityBehavior];
+    [self.animator removeBehavior:self.collisionBehavior];
+    [self.animator removeBehavior:self.itemBehavior];
+}
+
 #pragma mark - UIPinchGestureRecognizer
 
 //update the dynamic item eleasticity
@@ -207,8 +221,6 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     }
 }
 
-#pragma mark - rotation
-
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [self updateInterfaceForCurrentOrientation];
 }
@@ -259,20 +271,6 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
                          [self fixRogueViews];
                          
                      }];
-}
-
-//add behaviors to the animator
-- (void)addBehaviors {
-    [self.animator addBehavior:self.gravityBehavior];
-    [self.animator addBehavior:self.collisionBehavior];
-    [self.animator addBehavior:self.itemBehavior];
-}
-
-//remove behaviors from the animator
-- (void)removeBehaviors {
-    [self.animator removeBehavior:self.gravityBehavior];
-    [self.animator removeBehavior:self.collisionBehavior];
-    [self.animator removeBehavior:self.itemBehavior];
 }
 
 #pragma mark - core motion
