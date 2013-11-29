@@ -34,6 +34,7 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     
     //start hidden
     [self.view setAlpha:0.0f];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -41,6 +42,22 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     //setup the interface for the initial orientation
     //if the user starts upside down, the dynamic labels will appear
     [self updateInterfaceForCurrentOrientation];
+    
+    //swipe gestures for adjusting the number of items
+    //unfortunately, a gesture must be added for each supported direction instead of a single recognizer for all directions
+    //add these to the superview do that they work even when the dynamic interface is disabled
+    UISwipeGestureRecognizer *swipeGestureUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    UISwipeGestureRecognizer *swipeGestureDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    UISwipeGestureRecognizer *swipeGestureLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    UISwipeGestureRecognizer *swipeGestureRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    [swipeGestureUp setDirection:UISwipeGestureRecognizerDirectionUp];
+    [swipeGestureDown setDirection:UISwipeGestureRecognizerDirectionDown];
+    [swipeGestureLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [swipeGestureRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self.view.superview addGestureRecognizer:swipeGestureUp];
+    [self.view.superview addGestureRecognizer:swipeGestureDown];
+    [self.view.superview addGestureRecognizer:swipeGestureLeft];
+    [self.view.superview addGestureRecognizer:swipeGestureRight];
     
 }
 
@@ -80,25 +97,16 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
     [self.view addGestureRecognizer:pinchGesture];
     
-    //swipe gestures for adjusting the number of items
-    //unfortunately, a gesture must be added for each supported direction instead of a single recognizer for all directions
-    UISwipeGestureRecognizer *swipeGestureUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-    UISwipeGestureRecognizer *swipeGestureDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-    UISwipeGestureRecognizer *swipeGestureLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-    UISwipeGestureRecognizer *swipeGestureRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-    [swipeGestureUp setDirection:UISwipeGestureRecognizerDirectionUp];
-    [swipeGestureDown setDirection:UISwipeGestureRecognizerDirectionDown];
-    [swipeGestureLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [swipeGestureRight setDirection:UISwipeGestureRecognizerDirectionRight];
-    [self.view addGestureRecognizer:swipeGestureUp];
-    [self.view addGestureRecognizer:swipeGestureDown];
-    [self.view addGestureRecognizer:swipeGestureLeft];
-    [self.view addGestureRecognizer:swipeGestureRight];
-    
 }
 
 //adds a new item to the view and to the array of dynamic items
 - (void)addItem {
+    
+    //if the dynamic interface is not currently enabled, enable it
+    if (self.view.alpha <= 0.0f) {
+        [self enableDynamicInterface:YES];
+        return;
+    }
     
     //setup array if needed
     if (!self.dynamicItems) {
@@ -127,6 +135,12 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 
 //removes a dynamic item from the view and the array of items
 - (void)removeItem {
+    
+    //if the dynamic interface is not currently enabled, enable it
+    if (self.view.alpha <= 0.0f) {
+        [self enableDynamicInterface:YES];
+        return;
+    }
     
     //don't drop below the minimum
     if (!self.dynamicItems || self.dynamicItems.count <= _kItemCountMin) {
