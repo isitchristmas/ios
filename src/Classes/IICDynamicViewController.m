@@ -130,11 +130,6 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     [self.itemBehavior setFriction:0.0f];
     [self.itemBehavior setResistance:0.0f];
     
-    //create dynamic items
-    for (int index = 1; index <= _kItemCountDefault; index++) {
-        [self addItem];
-    }
-    
     //pinch recognizer for adjusting the elasticity
     UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
     [self.view addGestureRecognizer:pinchGesture];
@@ -157,15 +152,27 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 
 - (void)enableDynamicInterface:(BOOL)enable {
     
+    //setup dynamic items if needed
+    if (enable && !self.animator) {
+        [self setupDynamics];
+    }
+    
+    //if the animator doesn't exist, quit now
+    if (!self.animator) {
+        return;
+    }
+    
     //show the view when enabled
     float opacity = (enable) ? 1.0f : 0.0f;
     
     //update the gravity
     [self setGravityForOrientation:self.interfaceOrientation];
     
-    //setup dynamic items if needed
-    if (enable && !self.animator) {
-        [self setupDynamics];
+    //create dynamic items if none currently exist
+    if (enable && (!self.dynamicItems || self.dynamicItems.count == 0)) {
+        for (int index = 1; index <= _kItemCountDefault; index++) {
+            [self addItem];
+        }
     }
     
     //if the view will be visible after the animation
@@ -207,12 +214,6 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 //adds a new item to the view and to the array of dynamic items
 - (void)addItem {
     
-    //if the dynamic interface is not currently enabled, enable it
-    if (self.view.alpha <= 0.0f) {
-        [self enableDynamicInterface:YES];
-        return;
-    }
-    
     //setup array if needed
     if (!self.dynamicItems) {
         [self setDynamicItems:[[NSMutableArray alloc] initWithCapacity:_kItemCountMax]];
@@ -240,12 +241,6 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 
 //removes a dynamic item from the view and the array of items
 - (void)removeItem {
-    
-    //if the dynamic interface is not currently enabled, enable it
-    if (self.view.alpha <= 0.0f) {
-        [self enableDynamicInterface:YES];
-        return;
-    }
     
     //don't drop below the minimum
     if (!self.dynamicItems || self.dynamicItems.count <= _kItemCountMin) {
@@ -327,6 +322,12 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 
 //increase or descrease the number of dynamic items
 -(void)handleSwipe:(UISwipeGestureRecognizer *)gesture {
+    
+    //if the dynamic interface is not currently enabled, enable it
+    if (self.view.alpha <= 0.0f) {
+        [self enableDynamicInterface:YES];
+        return;
+    }
     
     switch (gesture.direction) {
             
