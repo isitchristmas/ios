@@ -7,10 +7,19 @@
 //
 
 #import "IICAppDelegate.h"
+#import "GAI.h"
 
 @implementation IICAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    //setup analytics
+    [[GAI sharedInstance] setTrackUncaughtExceptions:YES];
+    [[GAI sharedInstance] setDispatchInterval:20];
+    #if DEBUG
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
+    #endif
+    [[GAI sharedInstance] trackerWithTrackingId:@"UA-252618-15"];
     
     //setup the window
     [self setWindow:[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]];
