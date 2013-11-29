@@ -17,7 +17,9 @@ static const float _kElasticityDefault = 0.8f;
 static const float _kElasticityMin = 0.009f;  //must be greater than zero
 static const float _kElasticityMax = 1.0f;
 static const float _kGravityAmount = 2.0f;
-static const int _kMaxDynamicItems = 5;
+static const int _kItemCountMin = 0;
+static const int _kItemCountDefault = 5;
+static const int _kItemCountMax = 10;
 static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 
 - (void)loadView {
@@ -47,42 +49,97 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     //setup the animator
     [self setAnimator:[[UIDynamicAnimator alloc] initWithReferenceView:self.view]];
     
-    //setup array if needed
-    if (!self.dynamicViews) {
-        [self setDynamicViews:[[NSMutableArray alloc] initWithCapacity:_kMaxDynamicItems]];
-    }
-    
-    //create dynamic items
-    for (int index = 1; index <= _kMaxDynamicItems; index++) {
-        
-        //create the label
-        IICDynamicLabel *dynamicLabel = [[IICDynamicLabel alloc] initText:[self randomAnswer]];
-        [self.dynamicViews addObject:dynamicLabel];
-        
-        //add the views to the center of the view
-        [dynamicLabel setCenter:self.view.center];
-        [self.view insertSubview:dynamicLabel belowSubview:self.elasticityLabel];
-        
-    }
-    
     //gravity
-    [self setGravityBehavior:[[UIGravityBehavior alloc] initWithItems:self.dynamicViews]];
+    [self setGravityBehavior:[[UIGravityBehavior alloc] init]];
     
     //collisions
-    [self setCollisionBehavior:[[UICollisionBehavior alloc] initWithItems:self.dynamicViews]];
+    [self setCollisionBehavior:[[UICollisionBehavior alloc] init]];
     [self.collisionBehavior setTranslatesReferenceBoundsIntoBoundary:YES];
     
     //item behavior
-    [self setItemBehavior:[[UIDynamicItemBehavior alloc] initWithItems:self.dynamicViews]];
+    [self setItemBehavior:[[UIDynamicItemBehavior alloc] init]];
     [self.itemBehavior setElasticity:_kElasticityDefault];
     [self.itemBehavior setAngularResistance:0.1f];
     [self.itemBehavior setDensity:500.0f];
     [self.itemBehavior setFriction:0.0f];
     [self.itemBehavior setResistance:0.0f];
     
+    //create dynamic items
+    for (int index = 1; index <= _kItemCountDefault; index++) {
+        [self addItem];
+    }
+    
     //pinch recognizer for adjusting the elasticity
     UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
     [self.view addGestureRecognizer:pinchGesture];
+    
+    //swipe gestures for adjusting the number of items
+    //unfortunately, a gesture must be added for each supported direction instead of a single recognizer for all directions
+    UISwipeGestureRecognizer *swipeGestureUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    UISwipeGestureRecognizer *swipeGestureDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    UISwipeGestureRecognizer *swipeGestureLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    UISwipeGestureRecognizer *swipeGestureRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    [swipeGestureUp setDirection:UISwipeGestureRecognizerDirectionUp];
+    [swipeGestureDown setDirection:UISwipeGestureRecognizerDirectionDown];
+    [swipeGestureLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [swipeGestureRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self.view addGestureRecognizer:swipeGestureUp];
+    [self.view addGestureRecognizer:swipeGestureDown];
+    [self.view addGestureRecognizer:swipeGestureLeft];
+    [self.view addGestureRecognizer:swipeGestureRight];
+    
+}
+
+//adds a new item to the view and to the array of dynamic items
+- (void)addItem {
+    
+    //setup array if needed
+    if (!self.dynamicItems) {
+        [self setDynamicItems:[[NSMutableArray alloc] initWithCapacity:_kItemCountMax]];
+    }
+    
+    //don't exceed the max
+    if (self.dynamicItems.count >= _kItemCountMax) {
+        return;
+    }
+    
+    //create the label
+    IICDynamicLabel *dynamicLabel = [[IICDynamicLabel alloc] initText:[self randomAnswer]];
+    [self.dynamicItems addObject:dynamicLabel];
+    
+    //add the views to the center of the view
+    [dynamicLabel setCenter:self.view.center];
+    [self.view insertSubview:dynamicLabel belowSubview:self.elasticityLabel];
+    
+    //add dynamic behaviors
+    [self.gravityBehavior addItem:dynamicLabel];
+    [self.collisionBehavior addItem:dynamicLabel];
+    [self.itemBehavior addItem:dynamicLabel];
+    
+}
+
+//removes a dynamic item from the view and the array of items
+- (void)removeItem {
+    
+    //don't drop below the minimum
+    if (!self.dynamicItems || self.dynamicItems.count <= _kItemCountMin) {
+        return;
+    }
+    
+    //remove the last view
+    UIView *lastView = [self.dynamicItems lastObject];
+    if (lastView) {
+        
+        //add dynamic behaviors
+        [self.gravityBehavior removeItem:lastView];
+        [self.collisionBehavior removeItem:lastView];
+        [self.itemBehavior removeItem:lastView];
+        
+        //remove from the view and the array
+        [lastView removeFromSuperview];
+        [self.dynamicItems removeObject:lastView];
+        
+    }
     
 }
 
@@ -95,7 +152,7 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
                      animations:^{
                          
                          //update the label text and size
-                         for (IICDynamicLabel *label in self.dynamicViews) {
+                         for (IICDynamicLabel *label in self.dynamicItems) {
                              [label setText:[self randomAnswer]];
                              [label sizeToFit];
                          }
@@ -127,7 +184,7 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 //check to see if any of the dynamic views got pushed out of the main view
 //if so, reset it
 - (void)fixRogueViews {
-    for (UIView *view in self.dynamicViews) {
+    for (UIView *view in self.dynamicItems) {
         if (!CGRectContainsPoint(self.view.frame, view.center)) {
             [view setCenter:self.view.center];
         }
@@ -172,11 +229,37 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     }
     
     //update the elasticity
-    //update the label
+    //update the item
     [self.itemBehavior setElasticity:newElasticity];
     [self.elasticityLabel setText:[NSString stringWithFormat:_kElasticityFormat, (int)(newElasticity * 100)]];
     
 }
+
+#pragma mark - UISwipeGestureRecognizer
+
+//increase or descrease the number of dynamic items
+-(void)handleSwipe:(UISwipeGestureRecognizer *)gesture {
+    
+    switch (gesture.direction) {
+            
+        //add item
+        case UISwipeGestureRecognizerDirectionUp:
+        case UISwipeGestureRecognizerDirectionRight:
+            [self addItem];
+            break;
+            
+        //remove item
+        case UISwipeGestureRecognizerDirectionDown:
+        case UISwipeGestureRecognizerDirectionLeft:
+            [self removeItem];
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
 
 #pragma mark - rotation
 

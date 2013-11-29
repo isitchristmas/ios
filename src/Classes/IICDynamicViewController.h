@@ -17,10 +17,11 @@
 @property (nonatomic, strong) UIGravityBehavior *gravityBehavior;
 @property (nonatomic, strong) UICollisionBehavior *collisionBehavior;
 @property (nonatomic, strong) UIDynamicItemBehavior *itemBehavior;
-@property (nonatomic, strong) NSMutableArray *dynamicViews;
+@property (nonatomic, strong) NSMutableArray *dynamicItems;
 @property (nonatomic, strong) IICNotificationLabel *elasticityLabel;
-@property (nonatomic) float gravityX;
-@property (nonatomic) float gravityY;
+@property float gravityX;
+@property float gravityY;
+@property float itemCount;
 
 - (void)updateAnswers;
 
