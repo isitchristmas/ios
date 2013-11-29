@@ -291,7 +291,7 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 #pragma mark - UIPinchGestureRecognizer
 
 //update the dynamic item eleasticity
--(void)handlePinch:(UIPinchGestureRecognizer *)gesture {
+- (void)handlePinch:(UIPinchGestureRecognizer *)gesture {
     
     //don't grow or shrink too fast
     float scale = gesture.scale;
@@ -321,7 +321,7 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 #pragma mark - UISwipeGestureRecognizer
 
 //increase or descrease the number of dynamic items
--(void)handleSwipe:(UISwipeGestureRecognizer *)gesture {
+- (void)handleSwipe:(UISwipeGestureRecognizer *)gesture {
     
     //if the dynamic interface is not currently enabled, enable it
     if (self.view.alpha <= 0.0f) {
