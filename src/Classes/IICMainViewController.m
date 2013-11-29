@@ -7,6 +7,9 @@
 //
 
 #import "IICMainViewController.h"
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @implementation IICMainViewController
 static const int _kPadding = 10;
@@ -103,6 +106,14 @@ static const int _kPadding = 10;
     //we could set a timer for December 25th at midnight, but isn't it more fun to keep asking?
 	[self setResultLabel];
 	[NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(setResultLabel) userInfo:nil repeats:YES];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    
+    //track view with analytics
+    [[GAI sharedInstance].defaultTracker set:kGAIScreenName value:@"Main View"];
+    [[GAI sharedInstance].defaultTracker send:[[GAIDictionaryBuilder createAppView] build]];
     
 }
 

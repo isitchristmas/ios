@@ -11,6 +11,9 @@
 #import "IICMainViewController.h"
 #import "IICAppDelegate.h"
 #import <QuartzCore/QuartzCore.h>
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @implementation IICDynamicViewController
 
@@ -66,6 +69,10 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     //toggle the dynamic interface when the user long presses the screen
     UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
     [self.view.superview addGestureRecognizer:longPressGesture];
+    
+    //track view with analytics
+    [[GAI sharedInstance].defaultTracker set:kGAIScreenName value:@"Dynamic View"];
+    [[GAI sharedInstance].defaultTracker send:[[GAIDictionaryBuilder createAppView] build]];
     
 }
 
@@ -221,6 +228,12 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
                          [self fixRogueViews];
                          
                      }];
+    
+    //track when dynamic interface is enabled or disabled with analytics
+    [[GAI sharedInstance].defaultTracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"  // Event category (required)
+                                                          action:@"enableDynamicInterface"          // Event action (required)
+                                                           label:(enable) ? @"true" : @"false"      // Event label
+                                                           value:nil] build]];                      // Event value
     
 }
 

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
 #import "IICMainViewController.h"
+#import "GAI.h"
 
 @interface IICAppDelegate : NSObject <UIApplicationDelegate>
 
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) IICMainViewController *iicController;
 @property (nonatomic, strong) CMMotionManager *motionManager;
+@property (nonatomic, strong) id<GAITracker> tracker;
 
 @end
 
