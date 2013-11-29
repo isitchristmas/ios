@@ -15,6 +15,7 @@
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		4701DC271841050C009DDE6A /* IICDynamicLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4701DC261841050C009DDE6A /* IICDynamicLabel.m */; };
 		4701DC2A18413F48009DDE6A /* IICDynamicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4701DC2918413F48009DDE6A /* IICDynamicViewController.m */; };
+		473E5CD418482B2600398418 /* IICDynamicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 473E5CD318482B2600398418 /* IICDynamicView.m */; };
 		47D4B68F184648070007FE12 /* IICNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D4B68E184648070007FE12 /* IICNotificationLabel.m */; };
 		47F1AB761840F6EA003D98FC /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F1AB751840F6EA003D98FC /* CoreMotion.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CA671B3D12A19022001533FD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CA671B3C12A19022001533FD /* Settings.bundle */; };
@@ -36,6 +37,8 @@
 		4701DC261841050C009DDE6A /* IICDynamicLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IICDynamicLabel.m; sourceTree = "<group>"; };
 		4701DC2818413F48009DDE6A /* IICDynamicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IICDynamicViewController.h; sourceTree = "<group>"; };
 		4701DC2918413F48009DDE6A /* IICDynamicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IICDynamicViewController.m; sourceTree = "<group>"; };
+		473E5CD218482B2600398418 /* IICDynamicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IICDynamicView.h; sourceTree = "<group>"; };
+		473E5CD318482B2600398418 /* IICDynamicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IICDynamicView.m; sourceTree = "<group>"; };
 		47D4B68D184648070007FE12 /* IICNotificationLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IICNotificationLabel.h; sourceTree = "<group>"; };
 		47D4B68E184648070007FE12 /* IICNotificationLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IICNotificationLabel.m; sourceTree = "<group>"; };
 		47F1AB751840F6EA003D98FC /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -62,16 +65,11 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				473E5CCF18482AA600398418 /* DynamicView */,
 				1D3623240D0F684500981E51 /* IICAppDelegate.h */,
 				1D3623250D0F684500981E51 /* IICAppDelegate.m */,
-				4701DC251841050C009DDE6A /* IICDynamicLabel.h */,
-				4701DC261841050C009DDE6A /* IICDynamicLabel.m */,
-				4701DC2818413F48009DDE6A /* IICDynamicViewController.h */,
-				4701DC2918413F48009DDE6A /* IICDynamicViewController.m */,
 				1CA7689910B89C7C0050EAFA /* IICMainViewController.h */,
 				1CA7689A10B89C7C0050EAFA /* IICMainViewController.m */,
-				47D4B68D184648070007FE12 /* IICNotificationLabel.h */,
-				47D4B68E184648070007FE12 /* IICNotificationLabel.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -124,6 +122,21 @@
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		473E5CCF18482AA600398418 /* DynamicView */ = {
+			isa = PBXGroup;
+			children = (
+				4701DC251841050C009DDE6A /* IICDynamicLabel.h */,
+				4701DC261841050C009DDE6A /* IICDynamicLabel.m */,
+				473E5CD218482B2600398418 /* IICDynamicView.h */,
+				473E5CD318482B2600398418 /* IICDynamicView.m */,
+				4701DC2818413F48009DDE6A /* IICDynamicViewController.h */,
+				4701DC2918413F48009DDE6A /* IICDynamicViewController.m */,
+				47D4B68D184648070007FE12 /* IICNotificationLabel.h */,
+				47D4B68E184648070007FE12 /* IICNotificationLabel.m */,
+			);
+			name = DynamicView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +212,7 @@
 				1D3623260D0F684500981E51 /* IICAppDelegate.m in Sources */,
 				4701DC271841050C009DDE6A /* IICDynamicLabel.m in Sources */,
 				47D4B68F184648070007FE12 /* IICNotificationLabel.m in Sources */,
+				473E5CD418482B2600398418 /* IICDynamicView.m in Sources */,
 				1CA7689B10B89C7C0050EAFA /* IICMainViewController.m in Sources */,
 				4701DC2A18413F48009DDE6A /* IICDynamicViewController.m in Sources */,
 			);

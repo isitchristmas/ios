@@ -26,6 +26,12 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 - (void)loadView {
     [super loadView];
     
+    //use the custom view class
+    if (![self.view isKindOfClass:[IICDynamicView class]]) {
+        [self setView:[[IICDynamicView alloc] initWithFrame:self.view.frame]];
+        [(IICDynamicView *)self.view setDelegate:self];
+    }
+    
     //start hidden
     [self.view setAlpha:0.0f];
 }
@@ -280,14 +286,15 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 
 - (NSUInteger)supportedInterfaceOrientations {
     
-    //if the interface is not currently upside down, allow any rotations
-    if (self.view.alpha == 0.0f || self.interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown) {
-        return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortraitUpsideDown);
-    }
-
-    //orientation is currently upside down
+    //if dynamic interface is already enabled or orientation is upside down
     //don't allow landscape
-    return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown);
+    if ((self.view.alpha >= 1.0f || [UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown)) {
+        return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown);
+    }
+    
+    //the dynamic interface is not enabled
+    //allow any rotations
+    return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortraitUpsideDown);
     
 }
 
@@ -325,21 +332,28 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 
 - (void)updateInterfaceForCurrentOrientation {
     
-    //hide the views when in portrait mode
-    float opacity = (self.interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown) ? 0.0f : 1.0f;
+    //enable the dynamic interface when upside down
+    [self enableDynamicInterface:(self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)];
+
+}
+
+- (void)enableDynamicInterface:(BOOL)enable {
+    
+    //show the view when enabled
+    float opacity = (enable) ? 1.0f : 0.0f;
     
     //update the gravity
     [self setGravityForOrientation:self.interfaceOrientation];
     
     //setup dynamic items if needed
-    if (opacity > 0.0f && !self.animator) {
+    if (enable && !self.animator) {
         [self setupDynamics];
     }
     
     //if the view will be visible after the animation
     //add the behaviors
     //start detecting motion
-    if (opacity > 0.0f) {
+    if (enable) {
         [self addBehaviors];
         [self startMotionDetection];
     }
@@ -360,7 +374,7 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
                          //view will be invisible
                          //remove behaviors
                          //stop detecting motion
-                         if (opacity <= 0.0f) {
+                         if (!enable) {
                              [self removeBehaviors];
                              [self.motionManager stopAccelerometerUpdates];
                          }
@@ -369,6 +383,7 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
                          [self fixRogueViews];
                          
                      }];
+    
 }
 
 #pragma mark - core motion
@@ -395,6 +410,13 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
             
         });
     }];
+}
+
+#pragma mark - IICDynamicViewProtocol
+
+//toggle the dynamic interface when the user shakes the device
+- (void)viewDidShake {
+    [self enableDynamicInterface:(self.view.alpha == 0.0f)];
 }
 
 @end

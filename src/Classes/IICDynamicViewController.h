@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <CoreMotion/CoreMotion.h>
 #import "IICNotificationLabel.h"
+#import "IICDynamicView.h"
 
-@interface IICDynamicViewController : UIViewController
+@interface IICDynamicViewController : UIViewController <IICDynamicViewProtocol>
 
 @property (nonatomic, strong) CMMotionManager *motionManager;
 @property (nonatomic, strong) UIDynamicAnimator *animator;
@@ -24,5 +25,6 @@
 @property float itemCount;
 
 - (void)updateAnswers;
+- (void)enableDynamicInterface:(BOOL)enable;
 
 @end
