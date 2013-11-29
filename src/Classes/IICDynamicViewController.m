@@ -61,6 +61,48 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     
 }
 
+#pragma mark - answers
+
+//updates all of the dynamic views with a random answer
+- (void)updateAnswers {
+    
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         
+                         //update the label text and size
+                         for (IICDynamicLabel *label in self.dynamicItems) {
+                             [label setText:[self randomAnswer]];
+                             [label sizeToFit];
+                         }
+                         
+                     }
+                     completion:^(BOOL finished){
+                         
+                         //fix any out of control views
+                         [self fixRogueViews];
+                         
+                     }];
+    
+}
+
+//returns a yes/no answer for a random language
+- (NSString *)randomAnswer {
+    
+    //grab the main controller
+    IICMainViewController *mainController = (IICMainViewController *)self.parentViewController;
+    
+    //return a random answer
+    int randomIndex = arc4random() % mainController.languages.count;
+    NSString *language = [mainController.languages objectAtIndex:randomIndex];
+    NSString *answer = [mainController isItChristmas:language];
+    return answer;
+    
+}
+
+#pragma mark - dynamic interface
+
 - (void)setupDynamics {
     
     //setup the elasticity label if needed
@@ -96,6 +138,69 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     //pinch recognizer for adjusting the elasticity
     UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
     [self.view addGestureRecognizer:pinchGesture];
+    
+}
+
+//add behaviors to the animator
+- (void)addBehaviors {
+    [self.animator addBehavior:self.gravityBehavior];
+    [self.animator addBehavior:self.collisionBehavior];
+    [self.animator addBehavior:self.itemBehavior];
+}
+
+//remove behaviors from the animator
+- (void)removeBehaviors {
+    [self.animator removeBehavior:self.gravityBehavior];
+    [self.animator removeBehavior:self.collisionBehavior];
+    [self.animator removeBehavior:self.itemBehavior];
+}
+
+- (void)enableDynamicInterface:(BOOL)enable {
+    
+    //show the view when enabled
+    float opacity = (enable) ? 1.0f : 0.0f;
+    
+    //update the gravity
+    [self setGravityForOrientation:self.interfaceOrientation];
+    
+    //setup dynamic items if needed
+    if (enable && !self.animator) {
+        [self setupDynamics];
+    }
+    
+    //if the view will be visible after the animation
+    //add the behaviors
+    //start detecting motion
+    if (enable) {
+        [self addBehaviors];
+        [self startMotionDetection];
+    }
+    
+    //animate the view opacity
+    //remove the behaviors if needed
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         
+                         //animate the opacity
+                         [self.view setAlpha:opacity];
+                         
+                     }
+                     completion:^(BOOL finished){
+                         
+                         //view will be invisible
+                         //remove behaviors
+                         //stop detecting motion
+                         if (!enable) {
+                             [self removeBehaviors];
+                             [self.motionManager stopAccelerometerUpdates];
+                         }
+                         
+                         //fix any views that got pushed off the screen
+                         [self fixRogueViews];
+                         
+                     }];
     
 }
 
@@ -178,44 +283,6 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     
 }
 
-//updates all of the dynamic views with a random answer
-- (void)updateAnswers {
-    
-    [UIView animateWithDuration:0.3f
-                          delay:0.0f
-                        options: UIViewAnimationCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         
-                         //update the label text and size
-                         for (IICDynamicLabel *label in self.dynamicItems) {
-                             [label setText:[self randomAnswer]];
-                             [label sizeToFit];
-                         }
-                         
-                     }
-                     completion:^(BOOL finished){
-                         
-                         //fix any out of control views
-                         [self fixRogueViews];
-                         
-                     }];
-
-}
-
-//returns a yes/no answer for a random language
-- (NSString *)randomAnswer {
-    
-    //grab the main controller
-    IICMainViewController *mainController = (IICMainViewController *)self.parentViewController;
-    
-    //return a random answer
-    int randomIndex = arc4random() % mainController.languages.count;
-    NSString *language = [mainController.languages objectAtIndex:randomIndex];
-    NSString *answer = [mainController isItChristmas:language];
-    return answer;
-    
-}
-
 //check to see if any of the dynamic views got pushed out of the main view
 //if so, reset it
 - (void)fixRogueViews {
@@ -224,20 +291,6 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
             [view setCenter:self.view.center];
         }
     }
-}
-
-//add behaviors to the animator
-- (void)addBehaviors {
-    [self.animator addBehavior:self.gravityBehavior];
-    [self.animator addBehavior:self.collisionBehavior];
-    [self.animator addBehavior:self.itemBehavior];
-}
-
-//remove behaviors from the animator
-- (void)removeBehaviors {
-    [self.animator removeBehavior:self.gravityBehavior];
-    [self.animator removeBehavior:self.collisionBehavior];
-    [self.animator removeBehavior:self.itemBehavior];
 }
 
 #pragma mark - UIPinchGestureRecognizer
@@ -349,55 +402,6 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     //enable the dynamic interface when upside down
     [self enableDynamicInterface:(self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)];
 
-}
-
-- (void)enableDynamicInterface:(BOOL)enable {
-    
-    //show the view when enabled
-    float opacity = (enable) ? 1.0f : 0.0f;
-    
-    //update the gravity
-    [self setGravityForOrientation:self.interfaceOrientation];
-    
-    //setup dynamic items if needed
-    if (enable && !self.animator) {
-        [self setupDynamics];
-    }
-    
-    //if the view will be visible after the animation
-    //add the behaviors
-    //start detecting motion
-    if (enable) {
-        [self addBehaviors];
-        [self startMotionDetection];
-    }
-    
-    //animate the view opacity
-    //remove the behaviors if needed
-    [UIView animateWithDuration:0.3f
-                          delay:0.0f
-                        options: UIViewAnimationCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         
-                         //animate the opacity
-                         [self.view setAlpha:opacity];
-                         
-                     }
-                     completion:^(BOOL finished){
-                         
-                         //view will be invisible
-                         //remove behaviors
-                         //stop detecting motion
-                         if (!enable) {
-                             [self removeBehaviors];
-                             [self.motionManager stopAccelerometerUpdates];
-                         }
-                         
-                         //fix any views that got pushed off the screen
-                         [self fixRogueViews];
-                         
-                     }];
-    
 }
 
 #pragma mark - core motion
