@@ -20,8 +20,8 @@
     [self.window makeKeyAndVisible];
     
     //setup the main view controller
-	[self setIicController:[[IICMainViewController alloc] init]];
-    [self.window setRootViewController:self.iicController];
+	[self setMainController:[[IICMainViewController alloc] init]];
+    [self.window setRootViewController:self.mainController];
 	
 	//make sure defaults are set
 	[self setupDefaults];
