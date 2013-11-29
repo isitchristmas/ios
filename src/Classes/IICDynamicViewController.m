@@ -275,6 +275,7 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     
     //remove the last view
     UIView *lastView = [self.dynamicItems lastObject];
+    [self.dynamicItems removeObject:lastView];
     if (lastView) {
         
         //animate the opacity then remove the item
@@ -294,9 +295,8 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
                              [self.collisionBehavior removeItem:lastView];
                              [self.itemBehavior removeItem:lastView];
                              
-                             //remove from the view and the array
+                             //remove from the view
                              [lastView removeFromSuperview];
-                             [self.dynamicItems removeObject:lastView];
                              
                          }];
         
