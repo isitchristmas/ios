@@ -130,7 +130,7 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     UIView *lastView = [self.dynamicItems lastObject];
     if (lastView) {
         
-        //add dynamic behaviors
+        //remove dynamic behaviors
         [self.gravityBehavior removeItem:lastView];
         [self.collisionBehavior removeItem:lastView];
         [self.itemBehavior removeItem:lastView];
