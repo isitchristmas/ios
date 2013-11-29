@@ -10,6 +10,7 @@
 #import "IICDynamicLabel.h"
 #import "IICMainViewController.h"
 #import "IICAppDelegate.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation IICDynamicViewController
 
@@ -130,14 +131,28 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     UIView *lastView = [self.dynamicItems lastObject];
     if (lastView) {
         
-        //remove dynamic behaviors
-        [self.gravityBehavior removeItem:lastView];
-        [self.collisionBehavior removeItem:lastView];
-        [self.itemBehavior removeItem:lastView];
-        
-        //remove from the view and the array
-        [lastView removeFromSuperview];
-        [self.dynamicItems removeObject:lastView];
+        //animate the opacity then remove the item
+        [UIView animateWithDuration:0.3f
+                              delay:0.0f
+                            options: UIViewAnimationCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             
+                             //fade away
+                             [lastView setAlpha:0.0f];
+                             
+                         }
+                         completion:^(BOOL finished){
+                             
+                             //remove dynamic behaviors
+                             [self.gravityBehavior removeItem:lastView];
+                             [self.collisionBehavior removeItem:lastView];
+                             [self.itemBehavior removeItem:lastView];
+                             
+                             //remove from the view and the array
+                             [lastView removeFromSuperview];
+                             [self.dynamicItems removeObject:lastView];
+                             
+                         }];
         
     }
     
