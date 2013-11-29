@@ -59,6 +59,14 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     [self.view.superview addGestureRecognizer:swipeGestureLeft];
     [self.view.superview addGestureRecognizer:swipeGestureRight];
     
+    //toggle the dynamic interface when the user taps the screen
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleDynamicInterface)];
+    [self.view.superview addGestureRecognizer:tapGesture];
+    
+    //toggle the dynamic interface when the user long presses the screen
+    UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+    [self.view.superview addGestureRecognizer:longPressGesture];
+    
 }
 
 #pragma mark - answers
@@ -102,6 +110,11 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 }
 
 #pragma mark - dynamic interface
+
+//toggles the dynamic interface on/off
+- (void)toggleDynamicInterface {
+    [self enableDynamicInterface:(self.view.alpha == 0.0f)];
+}
 
 - (void)setupDynamics {
     
@@ -349,6 +362,14 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     
 }
 
+#pragma mark - UILongPressGestureRecognizer
+
+//toggle the dynamic interface for a long press
+- (void)handleLongPress:(UILongPressGestureRecognizer *)gesture {
+    if (gesture.state == UIGestureRecognizerStateEnded) {
+        [self toggleDynamicInterface];
+    }
+}
 
 #pragma mark - rotation
 
@@ -435,7 +456,7 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
 
 //toggle the dynamic interface when the user shakes the device
 - (void)viewDidShake {
-    [self enableDynamicInterface:(self.view.alpha == 0.0f)];
+    [self toggleDynamicInterface];
 }
 
 @end
