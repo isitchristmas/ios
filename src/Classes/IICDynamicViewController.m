@@ -216,16 +216,20 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
                      }
                      completion:^(BOOL finished){
                          
-                         //view will be invisible
-                         //remove behaviors
-                         //stop detecting motion
-                         if (!enable) {
-                             [self removeBehaviors];
-                             [self.motionManager stopAccelerometerUpdates];
+                         if (finished) {
+                             
+                             //view will be invisible
+                             //remove behaviors
+                             //stop detecting motion
+                             if (!enable) {
+                                 [self removeBehaviors];
+                                 [self.motionManager stopAccelerometerUpdates];
+                             }
+                             
+                             //fix any views that got pushed off the screen
+                             [self fixRogueViews];
+                             
                          }
-                         
-                         //fix any views that got pushed off the screen
-                         [self fixRogueViews];
                          
                      }];
     
