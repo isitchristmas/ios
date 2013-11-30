@@ -302,6 +302,11 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
                              //remove from the view
                              [lastView removeFromSuperview];
                              
+                             //if there are no items, disable the dynamic interface
+                             if (self.dynamicItems.count == 0) {
+                                 [self enableDynamicInterface:NO];
+                             }
+                             
                          }];
         
     }
