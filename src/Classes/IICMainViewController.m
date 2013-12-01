@@ -96,7 +96,7 @@ static const int _kPadding = 10;
 	[self.resultLabel setAdjustsFontSizeToFitWidth:YES];
     [self.resultLabel setBackgroundColor:[UIColor clearColor]];
 	[self.resultLabel setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin];
-	[self.resultLabel setTextAlignment:UITextAlignmentCenter];
+	[self.resultLabel setTextAlignment:NSTextAlignmentCenter];
 	
 	//add the results label to the screen
 	[self.view addSubview:self.resultLabel];
