@@ -109,8 +109,8 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     IICMainViewController *mainController = (IICMainViewController *)self.parentViewController;
     
     //return a random answer
-    int randomIndex = arc4random() % mainController.languages.count;
-    NSString *language = [mainController.languages objectAtIndex:randomIndex];
+    int randomIndex = arc4random() % mainController.languageYesDict.count;
+    NSString *language = [[mainController.languageYesDict allKeys] objectAtIndex:randomIndex];
     NSString *answer = [mainController isItChristmas:language];
     return answer;
     
