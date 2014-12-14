@@ -17,7 +17,6 @@
 
 @property (nonatomic, strong) NSDictionary *languageYesDict;
 @property (nonatomic, strong) NSDictionary *languageNoDict;
-@property (nonatomic, strong) NSArray *languages;
 @property (nonatomic, strong) NSString *selectedLanguage;
 @property (nonatomic, strong) NSString *selectedCountry;
 @property (nonatomic, strong) UILabel *resultLabel;

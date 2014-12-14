@@ -24,15 +24,15 @@ static const int _kPadding = 10;
 	[self setLanguageYesDict:[mainBundle objectForInfoDictionaryKey:@"LANGUAGE_YES"]];
 	[self setLanguageNoDict:[mainBundle objectForInfoDictionaryKey:@"LANGUAGE_NO"]];
 	
-	//get the languages array and get the selected language
+	//get the user's preferred language
 	//the preferred language code is always the first item in the array
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[self setLanguages:[defaults objectForKey:@"AppleLanguages"]];
-	[self setSelectedLanguage:[self.languages objectAtIndex:0]];
+    NSArray *preferredLanguages = [NSLocale preferredLanguages];
+    [self setSelectedLanguage:[preferredLanguages objectAtIndex:0]];
 	
 	//get the country code
-	NSString *currentLocale = [defaults objectForKey:@"AppleLocale"];
-	[self setSelectedCountry:[currentLocale substringFromIndex:[currentLocale rangeOfString:@"_"].location+1]];
+    NSLocale *currentLocale = [NSLocale currentLocale];
+    NSString *countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+	[self setSelectedCountry:countryCode];
 	
 	//if the country code is canada, use the special language code
 	if ([[self.selectedCountry uppercaseString] isEqualToString:@"CA"]) {
