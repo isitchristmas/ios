@@ -13,7 +13,7 @@
 
 @interface IICAppDelegate : NSObject <UIApplicationDelegate>
 
-- (void)setupNotifications;
+- (void)setupNotifications:(UIUserNotificationSettings *)notificationSettings;
 - (void)setupDefaults;
 
 @property (nonatomic, strong) UIWindow *window;

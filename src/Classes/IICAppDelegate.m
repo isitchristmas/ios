@@ -41,15 +41,32 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
-	//setup the local notifications in the background
-	[[NSUserDefaults standardUserDefaults] synchronize];
-	if ([[UIApplication sharedApplication] respondsToSelector:@selector(scheduleLocalNotification:)]) {
-		[self performSelectorInBackground:@selector(setupNotifications) withObject:nil];
-	}
+    //sync defaults
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //request permission to send local notifications (>= ios 8)
+    //else setup the local notifications in the background (< ios 8) if available
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
+    } else if ([[UIApplication sharedApplication] respondsToSelector:@selector(scheduleLocalNotification:)]) {
+        [self performSelectorInBackground:@selector(setupNotifications:) withObject:nil];
+    }
     
 }
 
-- (void)setupNotifications {
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    
+    //setup the local notifications in the background
+    [self performSelectorInBackground:@selector(setupNotifications:) withObject:notificationSettings];
+    
+}
+
+- (void)setupNotifications:(UIUserNotificationSettings *)notificationSettings {
+    
+    //check user permission for alerts and stop here if denied
+    if (notificationSettings && !(notificationSettings.types & UIUserNotificationTypeAlert)) {
+        return;
+    }
 	
 	//this is running on a background thread so it needs its own autorelease pool
 	@autoreleasepool {
@@ -99,9 +116,13 @@
 			[notification setFireDate:fireDate];
 			[notification setTimeZone:[NSTimeZone defaultTimeZone]];
 			[notification setAlertAction:@"View"];
-			[notification setSoundName:UILocalNotificationDefaultSoundName];
 			[notification setApplicationIconBadgeNumber:0];
 			[notification setAlertBody:(day == 25) ? @"YES" : @"NO"];
+            
+            //only use a sound if we have permission
+            if (!notificationSettings || (notificationSettings.types & UIUserNotificationTypeSound)) {
+                [notification setSoundName:UILocalNotificationDefaultSoundName];
+            }
 
 			//schedule notification for this year if it is in the future
 			if (fireDate == [fireDate laterDate:now]) {
