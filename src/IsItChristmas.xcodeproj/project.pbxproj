@@ -53,6 +53,9 @@
 		473E5CDE184848AE00398418 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		473E5CE0184848B900398418 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		473E5CE2184848C700398418 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		47825E181A3E8E2700FEAF81 /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProduct.h; sourceTree = "<group>"; };
+		47825E191A3E8E2700FEAF81 /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProductAction.h; sourceTree = "<group>"; };
+		47825E1A1A3E8E2700FEAF81 /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommercePromotion.h; sourceTree = "<group>"; };
 		47D4B68D184648070007FE12 /* IICNotificationLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IICNotificationLabel.h; sourceTree = "<group>"; };
 		47D4B68E184648070007FE12 /* IICNotificationLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IICNotificationLabel.m; sourceTree = "<group>"; };
 		47F1AB751840F6EA003D98FC /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -166,6 +169,9 @@
 			children = (
 				473E5CD61848489800398418 /* GAI.h */,
 				473E5CD71848489800398418 /* GAIDictionaryBuilder.h */,
+				47825E181A3E8E2700FEAF81 /* GAIEcommerceProduct.h */,
+				47825E191A3E8E2700FEAF81 /* GAIEcommerceProductAction.h */,
+				47825E1A1A3E8E2700FEAF81 /* GAIEcommercePromotion.h */,
 				473E5CD81848489800398418 /* GAIFields.h */,
 				473E5CD91848489800398418 /* GAILogger.h */,
 				473E5CDA1848489800398418 /* GAITrackedViewController.h */,
@@ -204,7 +210,7 @@
 				LastUpgradeCheck = 0500;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = A3L8E28D6Y;
+						DevelopmentTeam = Q69G67725N;
 					};
 				};
 			};
