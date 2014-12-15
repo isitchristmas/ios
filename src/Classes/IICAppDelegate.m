@@ -61,8 +61,8 @@
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		BOOL notifyDecember = [defaults boolForKey:@"notify_december"];
 		BOOL notifyChristmas = [defaults boolForKey:@"notify_christmas"];
-		int timeDecember = [defaults integerForKey:@"notify_december_time"];
-		int timeChristmas = [defaults integerForKey:@"notify_christmas_time"];
+		int timeDecember = (int)[defaults integerForKey:@"notify_december_time"];
+		int timeChristmas = (int)[defaults integerForKey:@"notify_christmas_time"];
 		
 		//if no notifications are enabled, return now
 		if (!notifyChristmas && !notifyDecember) {
