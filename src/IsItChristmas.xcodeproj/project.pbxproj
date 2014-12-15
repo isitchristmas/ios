@@ -20,10 +20,10 @@
 		473E5CDF184848AE00398418 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 473E5CDE184848AE00398418 /* CoreData.framework */; };
 		473E5CE1184848B900398418 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 473E5CE0184848B900398418 /* SystemConfiguration.framework */; };
 		473E5CE3184848C700398418 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 473E5CE2184848C700398418 /* libz.dylib */; };
+		47A5C09F1A3E90D10048558F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47A5C09E1A3E90D10048558F /* Images.xcassets */; };
 		47D4B68F184648070007FE12 /* IICNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D4B68E184648070007FE12 /* IICNotificationLabel.m */; };
 		47F1AB761840F6EA003D98FC /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F1AB751840F6EA003D98FC /* CoreMotion.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CA671B3D12A19022001533FD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CA671B3C12A19022001533FD /* Settings.bundle */; };
-		CAF9D7FD18395379003313B7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAF9D7FC18395379003313B7 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,12 +56,12 @@
 		47825E181A3E8E2700FEAF81 /* GAIEcommerceProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProduct.h; sourceTree = "<group>"; };
 		47825E191A3E8E2700FEAF81 /* GAIEcommerceProductAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommerceProductAction.h; sourceTree = "<group>"; };
 		47825E1A1A3E8E2700FEAF81 /* GAIEcommercePromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIEcommercePromotion.h; sourceTree = "<group>"; };
+		47A5C09E1A3E90D10048558F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		47D4B68D184648070007FE12 /* IICNotificationLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IICNotificationLabel.h; sourceTree = "<group>"; };
 		47D4B68E184648070007FE12 /* IICNotificationLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IICNotificationLabel.m; sourceTree = "<group>"; };
 		47F1AB751840F6EA003D98FC /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* IsItChristmas-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IsItChristmas-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		CA671B3C12A19022001533FD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		CAF9D7FC18395379003313B7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = IsItChristmas/Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,7 +128,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CAF9D7FC18395379003313B7 /* Images.xcassets */,
+				47A5C09E1A3E90D10048558F /* Images.xcassets */,
 				8D1107310486CEB800E47090 /* IsItChristmas-Info.plist */,
 				CA671B3C12A19022001533FD /* Settings.bundle */,
 			);
@@ -239,7 +239,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA671B3D12A19022001533FD /* Settings.bundle in Resources */,
-				CAF9D7FD18395379003313B7 /* Images.xcassets in Resources */,
+				47A5C09F1A3E90D10048558F /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
