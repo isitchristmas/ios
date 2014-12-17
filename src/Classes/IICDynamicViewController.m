@@ -74,6 +74,7 @@ static NSString *_kElasticityFormat = @"Elasticity: %i%%";
     [[GAI sharedInstance].defaultTracker set:kGAIScreenName value:@"Dynamic View"];
     [[GAI sharedInstance].defaultTracker send:[[GAIDictionaryBuilder createAppView] build]];
     
+    [super viewDidAppear:animated];
 }
 
 #pragma mark - answers

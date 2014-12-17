@@ -115,6 +115,7 @@ static const int _kPadding = 10;
     [[GAI sharedInstance].defaultTracker set:kGAIScreenName value:@"Main View"];
     [[GAI sharedInstance].defaultTracker send:[[GAIDictionaryBuilder createAppView] build]];
     
+    [super viewDidAppear:animated];
 }
 
 //this sets the label text by calling isItChristmas
